@@ -71,24 +71,32 @@ double aequatio::Equation::operator()(std::string name, double val) {
       solve_terms[i].third = constants[solve_terms[i].second].second;
     }
   }
-  while (solve_terms.size() > 2) {
-    for (int j = 4; j >= 0; j--) {
-      for (int i = 0; i < solve_terms.size(); i++) {
-        if (i != 0 && solve_terms[i].first == OPERATION &&
-            solve_terms[i].second == j) {
-          if (solve_terms[i].second == 1) {
-            solve_terms[i - 1].third += solve_terms[i + 1].third;
-          } else if (solve_terms[i].second == 2) {
-            solve_terms[i - 1].third -= solve_terms[i + 1].third;
-          } else if (solve_terms[i].second == 3) {
-            solve_terms[i - 1].third /= solve_terms[i + 1].third;
-          } else if (solve_terms[i].second == 4) {
-            solve_terms[i - 1].third *= solve_terms[i + 1].third;
-          }
-          solve_terms.erase(solve_terms.begin() + i,
-                            solve_terms.begin() + i + 1);
-          // std::cout << solve_terms[i - 1].third << "->";
+  for (int j = 4; j >= 0; j--) {
+    for (int i = 0; i < solve_terms.size(); i++) {
+      std::string str = "";
+      for (int k = 0; k < solve_terms.size(); k++) {
+        if (solve_terms[k].first == VALUE) {
+          str += std::to_string(solve_terms[k].third);
+        } else {
+          str += std::to_string(solve_terms[k].second);
         }
+        str += ',';
+      }
+      // std::cout << str << '\n';
+      if (i != 0 && solve_terms[i].first == OPERATION &&
+          solve_terms[i].second == j) {
+        if (solve_terms[i].second == 1) {
+          solve_terms[i - 1].third += solve_terms[i + 1].third;
+        } else if (solve_terms[i].second == 2) {
+          solve_terms[i - 1].third -= solve_terms[i + 1].third;
+        } else if (solve_terms[i].second == 3) {
+          solve_terms[i - 1].third /= solve_terms[i + 1].third;
+        } else if (solve_terms[i].second == 4) {
+          solve_terms[i - 1].third *= solve_terms[i + 1].third;
+        }
+        solve_terms.erase(solve_terms.begin() + i, solve_terms.begin() + i + 2);
+        i -= 2;
+        // std::cout << solve_terms[i - 1].third << "->";
       }
     }
   }
