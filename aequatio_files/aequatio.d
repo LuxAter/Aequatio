@@ -1,1 +1,1 @@
-aequatio.o: aequatio.cpp aequatio.hpp functions/function.hpp
+aequatio.o: aequatio.cpp aequatio.hpp
