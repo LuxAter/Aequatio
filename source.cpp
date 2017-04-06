@@ -1,19 +1,9 @@
-#include "aequatio_files/aequatio_headers.hpp"
 #include <iostream>
+#include "src/equation/equation.hpp"
 
-int main(int argc, char const *argv[]) {
-  aequatio::LoadMathFunctions();
-  std::cout << aequatio::ListAvalibleFunctions(5) << "\n\n";
-  aequatio::Equation f("0");
-  std::string good = "";
-  while (good != "quit") {
-    getline(std::cin, good);
-    if (f.ValueString(good)) {
-      std::cout << "f(" << good << ")=" << f("x", stod(good)) << "\n";
-    } else if (good != "quit") {
-      f = good;
-      std::cout << f.EquationString() << "\n" << f.EquationString(1) << "\n";
-    }
-  }
+int main(int argc, char const* argv[]) {
+  aequatio::Equation eq("6 * ( 8 * 3 - 4 ) - 3");
+  std::cout << eq.String() << "->" << eq.RpnString() << "\n";
+  std::cout << "=" << eq() << "\n";
   return 0;
 }

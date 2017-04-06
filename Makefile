@@ -1,9 +1,12 @@
+ifndef VERBOSE
+.SILENT:
+endif
 export COMPILER = clang++
 export FLAGS = -MMD -std=c++11 -w -c
 CPP_FILES = $(wildcard *.cpp)
 TOP_DIR = $(notdir $(CPP_FILES:.cpp=.o))
 OBJ_FILES := $(shell find -name '*.o')
-LINK = 
+LINK = -lostendo -lpessum -lncurses
 NAME = aequatio
 
 all: $(TOP_DIR) subsystem $(NAME)
@@ -18,11 +21,12 @@ $(NAME): $(TOP_DIR) $(OBJ_FILES)
 	$(COMPILER) $(OBJ_FILES) -o $(NAME) $(LINK)
 
 %.o: %.cpp
-	$(COMPILER) $(FLAGS) -o $(notdir $*).o $*.cpp
+	@printf "Compiling $*.cpp...\n"
+	@$(COMPILER) $(FLAGS) -o $(notdir $*).o $*.cpp
 
 .PHONY : subsystem
 subsystem:
-	@cd aequatio_files && $(MAKE)
+	@cd src && $(MAKE)
 
 .PHONY : clean
 clean:
@@ -36,3 +40,11 @@ clean:
 
 .PHONY : new
 new: clean all
+
+.PHONY : install
+install: clean all
+	cp $(NAME) ~/bin/
+
+.PHONY : log
+log:
+	less output.log
