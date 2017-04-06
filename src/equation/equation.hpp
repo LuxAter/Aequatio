@@ -9,15 +9,9 @@ namespace aequatio {
     Equation();
     Equation(std::string str);
     ~Equation();
-    double operator()();
-    std::string String();
-    std::string RpnString();
 
    private:
-    void ParseEquationTerms();
-    void ParseEquationString();
     std::string eq_string, rpn_string;
-    std::vector<Term> eq_terms, rpn_terms;
   };
 }
 #endif
