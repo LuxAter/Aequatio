@@ -1,9 +1,9 @@
 export COMPILER = clang++
-export FLAGS = -MMD -std=c++11 -w -c
+export FLAGS = -MMD -std=c++11 -w -c -g
 CPP_FILES = $(wildcard *.cpp)
 TOP_DIR = $(notdir $(CPP_FILES:.cpp=.o))
 OBJ_FILES := $(shell find -name '*.o')
-LINK = 
+LINK =
 NAME = aequatio
 
 all: $(TOP_DIR) subsystem $(NAME)
@@ -36,3 +36,21 @@ clean:
 
 .PHONY : new
 new: clean all
+
+.PHONY : log
+log:
+	@less output.log
+
+.PHONY : lib
+lib: all
+	@printf "Comiling lib...\n"
+	@ar rcs lib$(NAME).a $(OBJ_FILES)
+	@printf "Copying lib to /usr/local/lib/...\n"
+	@sudo cp lib$(NAME).a /usr/local/lib/ -u
+	@printf "Copying base headers to /usr/local/include/...\n"
+	@sudo cp *.h /usr/local/include/
+	@printf "Copying project headers to /usr/local/include/...\n"
+	@sudo find . -name '*.hpp' -exec cp --parents \{\} /usr/local/include/ \;
+	@setterm -fore green
+	@printf "==========>>>>>>>>>>Compiled Installed Lib<<<<<<<<<<==========\n"
+	@setterm -fore white
