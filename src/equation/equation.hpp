@@ -1,8 +1,9 @@
 #ifndef AEQUATIO_EQUAITON_HPP
 #define AEQUATIO_EQUAITON_HPP
+#include <map>
 #include <string>
 #include <vector>
-#include "term.hpp"
+#include "../symbol.hpp"
 namespace aequatio {
   enum EQUATION_FORMAT { E_INFIX, E_RPN };
   enum PARSE_FORMAT { SHUNTING_YARD };
@@ -13,11 +14,16 @@ namespace aequatio {
     ~Equation();
     std::string String(int format);
     void Parse(int format);
+    void SetVariables(std::map<std::string, Symbol> vars);
+    Symbol operator()();
 
    private:
-    void LoadTerms();
+    void LoadSymbols();
     void ShuntingYard();
-    std::vector<Term> terms_infix, terms_rpn;
+    void Solve();
+    Symbol output;
+    std::map<std::string, Symbol> var_map;
+    std::vector<Symbol> terms_infix, terms_rpn;
     std::string str_infix, str_rpn;
   };
 }
