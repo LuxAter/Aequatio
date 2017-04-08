@@ -154,6 +154,10 @@
 
 aequatio::Symbol::Symbol() {}
 
-int aequatio::Symbol::Type() { return (SYMBOL_NONE); }
-
 aequatio::Symbol::~Symbol() {}
+
+int aequatio::Symbol::Type() {return(SYMBOL_NONE);}
+
+std::string aequatio::Symbol::String(){
+  return("(null)");
+}

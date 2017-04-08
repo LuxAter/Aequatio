@@ -1,6 +1,7 @@
 #ifndef AEQUATIO_NUMBER_HPP
 #define AEQUATIO_NUMBER_HPP
 #include "../../symbol.hpp"
+#include <string>
 namespace aequatio {
   class Number : public Symbol {
    public:
@@ -8,7 +9,7 @@ namespace aequatio {
     Number(double in_val);
     ~Number();
     int Type();
-    double inline operator()() { return (val); }
+    std::string String();
     double val;
 
    private:
