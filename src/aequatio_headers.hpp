@@ -1,5 +1,5 @@
 #include "aequatio.hpp"
-#include "class_headers.hpp"
 #include "constants.hpp"
-#include "equation/equation_headers.hpp"
+// #include "equation/equation_headers.hpp"
+#include "classes/class_headers.hpp"
 #include "symbol.hpp"

@@ -9,6 +9,3 @@ all: $(OBJ_FILES) subsystem
 
 .PHONY : subsystem
 subsystem:
-	@cd classes && $(MAKE)
-	# @cd equation && $(MAKE)
-	# @cd vector && $(MAKE)
