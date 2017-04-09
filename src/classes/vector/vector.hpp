@@ -13,6 +13,9 @@ namespace aequatio {
     int Type();
     std::string String();
     void Sum(Symbol* a, Symbol* b);
+    void Diff(Symbol* a, Symbol* b);
+    void Prod(Symbol* a, Symbol* b);
+    void Quot(Symbol* a, Symbol* b);
     std::vector<Symbol*> vec_terms;
     int length;
 
