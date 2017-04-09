@@ -20,6 +20,10 @@ void aequatio::Number::Sum(Symbol* a, Symbol* b) {
     Number* num_a = dynamic_cast<Number*>(a);
     Number* num_b = dynamic_cast<Number*>(b);
     val = num_a->val + num_b->val;
+  } else{
+    Log(L_WARNING,
+        "There is no sum operation between %i and %i that results in a %i type",
+        "Number/Sum", type_a, type_b, SYMBOL_NUMBER);
   }
 }
 
@@ -29,6 +33,10 @@ void aequatio::Number::Diff(Symbol* a, Symbol* b) {
     Number* num_a = dynamic_cast<Number*>(a);
     Number* num_b = dynamic_cast<Number*>(b);
     val = num_a->val - num_b->val;
+  } else{
+    Log(L_WARNING,
+        "There is no difference operation between %i and %i that results in a %i type",
+        "Number/Sum", type_a, type_b, SYMBOL_NUMBER);
   }
 }
 
@@ -37,7 +45,11 @@ void aequatio::Number::Prod(Symbol* a, Symbol* b) {
   if (type_a == SYMBOL_NUMBER && type_b == SYMBOL_NUMBER) {
     Number* num_a = dynamic_cast<Number*>(a);
     Number* num_b = dynamic_cast<Number*>(b);
-    val = num_a->val * num_b->val;
+    val = num_a->val * num_b->val; 
+  } else{
+    Log(L_WARNING,
+        "There is no product operation between %i and %i that results in a %i type",
+        "Number/Sum", type_a, type_b, SYMBOL_NUMBER);
   }
 }
 
@@ -47,6 +59,10 @@ void aequatio::Number::Quot(Symbol* a, Symbol* b) {
     Number* num_a = dynamic_cast<Number*>(a);
     Number* num_b = dynamic_cast<Number*>(b);
     val = num_a->val / num_b->val;
+  } else{
+    Log(L_WARNING,
+        "There is no quotient operation between %i and %i that results in a %i type",
+        "Number/Sum", type_a, type_b, SYMBOL_NUMBER);
   }
 }
 

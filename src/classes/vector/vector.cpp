@@ -1,19 +1,26 @@
 #include <vector>
+#include "../../aequatio.hpp"
 #include "../../symbol.hpp"
 #include "../class_headers.hpp"
 #include "vector.hpp"
 
-aequatio::Vector::Vector() {}
+aequatio::Vector::Vector() {
+  length = 0;
+}
 
 aequatio::Vector::Vector(int n) {
+  length = n;
   vec_terms = std::vector<Symbol*>(n, new Symbol);
 }
 
 aequatio::Vector::Vector(std::vector<Symbol*> elements) {
+  length = vec_terms.size();
   vec_terms = elements;
 }
 
-aequatio::Vector::~Vector() { vec_terms.clear(); }
+aequatio::Vector::~Vector() { 
+  length = int();
+  vec_terms.clear(); }
 
 int aequatio::Vector::Type() { return (SYMBOL_VECTOR); }
 
@@ -53,6 +60,10 @@ void aequatio::Vector::Sum(Symbol* a, Symbol* b) {
         vec_terms.push_back(vec_b->vec_terms[i]);
       }
     }
+  } else{
+    Log(L_WARNING,
+        "There is no sum operation between %i and %i that results in a %i type",
+        "Vector/Sum", type_a, type_b, SYMBOL_VECTOR);
   }
 }
 
@@ -79,7 +90,11 @@ void aequatio::Vector::Diff(Symbol* a, Symbol* b) {
       } else {
         vec_terms.push_back(vec_b->vec_terms[i]);
       }
-    }
+    } 
+  } else{
+    Log(L_WARNING,
+        "There is no difference operation between %i and %i that results in a %i type",
+        "Vector/Sum", type_a, type_b, SYMBOL_VECTOR);
   }
 }
 
@@ -106,7 +121,11 @@ void aequatio::Vector::Prod(Symbol* a, Symbol* b) {
       } else {
         vec_terms.push_back(vec_b->vec_terms[i]);
       }
-    }
+    } 
+  } else{
+    Log(L_WARNING,
+        "There is no product operation between %i and %i that results in a %i type",
+        "Vector/Sum", type_a, type_b, SYMBOL_VECTOR);
   }
 }
 
@@ -134,5 +153,9 @@ void aequatio::Vector::Quot(Symbol* a, Symbol* b) {
         vec_terms.push_back(vec_b->vec_terms[i]);
       }
     }
+  } else{
+    Log(L_WARNING,
+        "There is no quotient operation between %i and %i that results in a %i type",
+        "Vector/Sum", type_a, type_b, SYMBOL_VECTOR);
   }
 }

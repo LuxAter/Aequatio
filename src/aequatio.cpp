@@ -4,6 +4,7 @@
 
 namespace aequatio {
   std::vector<std::pair<int, std::string>> global_logs;
+  void (*full_log_handle)(std::pair<int, std::string>) = NULL;
   void (*log_handle)(std::string) = NULL;
 }
 
@@ -29,7 +30,9 @@ void aequatio::Log(int type, std::string msg, std::string func, ...) {
   }
   str = str + " [" + func + "]";
   global_logs.push_back(std::make_pair(type, str));
-  if (log_handle != NULL) {
+  if(full_log_handle != NULL){
+    full_log_handle(std::make_pair(type, str));
+  } else if (log_handle != NULL) {
     log_handle(str);
   }
 }
@@ -59,4 +62,8 @@ void aequatio::SaveLog(std::string file) {
 
 void aequatio::SetLogHandle(void (*handle)(std::string)) {
   log_handle = handle;
+}
+
+void aequatio::SetLogHandle(void (*handle)(std::pair<int, std::string>)){
+  full_log_handle = handle;
 }
