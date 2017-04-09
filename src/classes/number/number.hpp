@@ -1,7 +1,7 @@
 #ifndef AEQUATIO_NUMBER_HPP
 #define AEQUATIO_NUMBER_HPP
-#include "../../symbol.hpp"
 #include <string>
+#include "../../symbol.hpp"
 namespace aequatio {
   class Number : public Symbol {
    public:
@@ -10,6 +10,7 @@ namespace aequatio {
     ~Number();
     int Type();
     std::string String();
+    void Sum(Symbol* a, Symbol* b);
     double val;
 
    private:
