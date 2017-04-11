@@ -1,33 +1,37 @@
+#include <pessum.h>
 #include <vector>
 #include "../../aequatio.hpp"
-#include "../../symbol.hpp"
 #include "../class_headers.hpp"
 #include "vector.hpp"
 
-aequatio::Vector::Vector() {
-  length = 0;
-}
+aequatio::Vector::Vector() { length = 0; }
 
 aequatio::Vector::Vector(int n) {
   length = n;
-  vec_terms = std::vector<Symbol*>(n, new Symbol);
+  vec_terms = std::vector<Symbol>(n, Symbol());
 }
 
-aequatio::Vector::Vector(std::vector<Symbol*> elements) {
-  length = vec_terms.size();
+aequatio::Vector::Vector(std::vector<Symbol> elements) {
   vec_terms = elements;
+  length = vec_terms.size();
 }
 
-aequatio::Vector::~Vector() { 
+aequatio::Vector::~Vector() {
   length = int();
-  vec_terms.clear(); }
+  vec_terms.clear();
+}
 
-int aequatio::Vector::Type() { return (SYMBOL_VECTOR); }
+void aequatio::Vector::Append(Symbol element) {
+  vec_terms.push_back(element);
+  length++;
+}
+
+int aequatio::Vector::Type() { return (SY_VECTOR); }
 
 std::string aequatio::Vector::String() {
   std::string vec_str = "<";
   for (int i = 0; i < vec_terms.size(); i++) {
-    vec_str += vec_terms[i]->String();
+    vec_str += vec_terms[i].String();
     if (i != vec_terms.size() - 1) {
       vec_str += ",";
     }
@@ -36,126 +40,87 @@ std::string aequatio::Vector::String() {
   return (vec_str);
 }
 
-void aequatio::Vector::Sum(Symbol* a, Symbol* b) {
-  int type_a = a->Type(), type_b = b->Type();
-  if (type_a == SYMBOL_VECTOR && type_b == SYMBOL_NUMBER) {
-    Vector* vec = dynamic_cast<Vector*>(a);
-    Symbol* num = b;
-    if (vec == NULL) {
-      vec = dynamic_cast<Vector*>(b);
-      num = a;
+aequatio::Vector aequatio::operator+(Vector& a, Vector& b) {
+  Vector out;
+  for (int i = 0; i < b.length || i < a.length; i++) {
+    if (i >= a.length) {
+      out.Append(b.vec_terms[i]);
+    } else if (i >= b.length) {
+      out.Append(a.vec_terms[i]);
+    } else {
+      out.Append(a.vec_terms[i] + b.vec_terms[i]);
     }
-    vec_terms = vec->vec_terms;
-    for (int i = 0; i < vec_terms.size(); i++) {
-      vec_terms[i]->Sum(vec_terms[i], num);
-    }
-  } else if (type_a == SYMBOL_VECTOR && type_b == SYMBOL_VECTOR) {
-    Vector* vec_a = dynamic_cast<Vector*>(a);
-    Vector* vec_b = dynamic_cast<Vector*>(b);
-    vec_terms = vec_a->vec_terms;
-    for (int i = 0; i < vec_b->vec_terms.size(); i++) {
-      if (i < vec_terms.size()) {
-        vec_terms[i]->Sum(vec_terms[i], vec_b->vec_terms[i]);
-      } else {
-        vec_terms.push_back(vec_b->vec_terms[i]);
-      }
-    }
-  } else{
-    Log(L_WARNING,
-        "There is no sum operation between %i and %i that results in a %i type",
-        "Vector/Sum", type_a, type_b, SYMBOL_VECTOR);
   }
+  return (out);
 }
 
-void aequatio::Vector::Diff(Symbol* a, Symbol* b) {
-  int type_a = a->Type(), type_b = b->Type();
-  if (type_a == SYMBOL_VECTOR && type_b == SYMBOL_NUMBER) {
-    Vector* vec = dynamic_cast<Vector*>(a);
-    Symbol* num = b;
-    if (vec == NULL) {
-      vec = dynamic_cast<Vector*>(b);
-      num = a;
+aequatio::Vector aequatio::operator-(Vector& a, Vector& b) {
+  Vector out;
+  for (int i = 0; i < b.length || i < a.length; i++) {
+    if (i >= a.length) {
+      out.Append(b.vec_terms[i]);
+    } else if (i >= b.length) {
+      out.Append(a.vec_terms[i]);
+    } else {
+      out.Append(a.vec_terms[i] - b.vec_terms[i]);
     }
-    vec_terms = vec->vec_terms;
-    for (int i = 0; i < vec_terms.size(); i++) {
-      vec_terms[i]->Diff(vec_terms[i], num);
-    }
-  } else if (type_a == SYMBOL_VECTOR && type_b == SYMBOL_VECTOR) {
-    Vector* vec_a = dynamic_cast<Vector*>(a);
-    Vector* vec_b = dynamic_cast<Vector*>(b);
-    vec_terms = vec_a->vec_terms;
-    for (int i = 0; i < vec_b->vec_terms.size(); i++) {
-      if (i < vec_terms.size()) {
-        vec_terms[i]->Diff(vec_terms[i], vec_b->vec_terms[i]);
-      } else {
-        vec_terms.push_back(vec_b->vec_terms[i]);
-      }
-    } 
-  } else{
-    Log(L_WARNING,
-        "There is no difference operation between %i and %i that results in a %i type",
-        "Vector/Sum", type_a, type_b, SYMBOL_VECTOR);
   }
+  return (out);
 }
 
-void aequatio::Vector::Prod(Symbol* a, Symbol* b) {
-  int type_a = a->Type(), type_b = b->Type();
-  if (type_a == SYMBOL_VECTOR && type_b == SYMBOL_NUMBER) {
-    Vector* vec = dynamic_cast<Vector*>(a);
-    Symbol* num = b;
-    if (vec == NULL) {
-      vec = dynamic_cast<Vector*>(b);
-      num = a;
+aequatio::Vector aequatio::operator*(Vector& a, Vector& b) {
+  Vector out;
+  for (int i = 0; i < b.length || i < a.length; i++) {
+    if (i >= a.length) {
+      out.Append(b.vec_terms[i]);
+    } else if (i >= b.length) {
+      out.Append(a.vec_terms[i]);
+    } else {
+      out.Append(a.vec_terms[i] * b.vec_terms[i]);
     }
-    vec_terms = vec->vec_terms;
-    for (int i = 0; i < vec_terms.size(); i++) {
-      vec_terms[i]->Prod(vec_terms[i], num);
-    }
-  } else if (type_a == SYMBOL_VECTOR && type_b == SYMBOL_VECTOR) {
-    Vector* vec_a = dynamic_cast<Vector*>(a);
-    Vector* vec_b = dynamic_cast<Vector*>(b);
-    vec_terms = vec_a->vec_terms;
-    for (int i = 0; i < vec_b->vec_terms.size(); i++) {
-      if (i < vec_terms.size()) {
-        vec_terms[i]->Prod(vec_terms[i], vec_b->vec_terms[i]);
-      } else {
-        vec_terms.push_back(vec_b->vec_terms[i]);
-      }
-    } 
-  } else{
-    Log(L_WARNING,
-        "There is no product operation between %i and %i that results in a %i type",
-        "Vector/Sum", type_a, type_b, SYMBOL_VECTOR);
   }
+  return (out);
 }
 
-void aequatio::Vector::Quot(Symbol* a, Symbol* b) {
-  int type_a = a->Type(), type_b = b->Type();
-  if (type_a == SYMBOL_VECTOR && type_b == SYMBOL_NUMBER) {
-    Vector* vec = dynamic_cast<Vector*>(a);
-    Symbol* num = b;
-    if (vec == NULL) {
-      vec = dynamic_cast<Vector*>(b);
-      num = a;
+aequatio::Vector aequatio::operator/(Vector& a, Vector& b) {
+  Vector out;
+  for (int i = 0; i < b.length || i < a.length; i++) {
+    if (i >= a.length) {
+      out.Append(b.vec_terms[i]);
+    } else if (i >= b.length) {
+      out.Append(a.vec_terms[i]);
+    } else {
+      out.Append(a.vec_terms[i] / b.vec_terms[i]);
     }
-    vec_terms = vec->vec_terms;
-    for (int i = 0; i < vec_terms.size(); i++) {
-      vec_terms[i]->Quot(vec_terms[i], num);
-    }
-  } else if (type_a == SYMBOL_VECTOR && type_b == SYMBOL_VECTOR) {
-    Vector* vec_a = dynamic_cast<Vector*>(a);
-    Vector* vec_b = dynamic_cast<Vector*>(b);
-    vec_terms = vec_a->vec_terms;
-    for (int i = 0; i < vec_b->vec_terms.size(); i++) {
-      if (i < vec_terms.size()) {
-        vec_terms[i]->Quot(vec_terms[i], vec_b->vec_terms[i]);
-      } else {
-        vec_terms.push_back(vec_b->vec_terms[i]);
-      }
-    }
-  } else{
-    Log(L_WARNING,
-        "There is no quotient operation between %i and %i that results in a %i type",
-        "Vector/Sum", type_a, type_b, SYMBOL_VECTOR);
   }
+  return (out);
+}
+
+aequatio::Vector aequatio::operator+(Vector& a, Symbol& b) {
+  Vector out = a;
+  for (int i = 0; i < out.length; i++) {
+    out.vec_terms[i] = out.vec_terms[i] + b;
+  }
+  return (out);
+}
+aequatio::Vector aequatio::operator-(Vector& a, Symbol& b) {
+  Vector out = a;
+  for (int i = 0; i < out.length; i++) {
+    out.vec_terms[i] = out.vec_terms[i] - b;
+  }
+  return (out);
+}
+aequatio::Vector aequatio::operator*(Vector& a, Symbol& b) {
+  Vector out = a;
+  for (int i = 0; i < out.length; i++) {
+    out.vec_terms[i] = out.vec_terms[i] * b;
+  }
+  return (out);
+}
+aequatio::Vector aequatio::operator/(Vector& a, Symbol& b) {
+  Vector out = a;
+  for (int i = 0; i < out.length; i++) {
+    out.vec_terms[i] = b / out.vec_terms[i];
+  }
+  return (out);
 }

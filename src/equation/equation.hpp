@@ -3,7 +3,7 @@
 #include <map>
 #include <string>
 #include <vector>
-#include "../symbol.hpp"
+#include "../classes/class_headers.hpp"
 namespace aequatio {
   enum EQUATION_FORMAT { E_INFIX, E_RPN };
   enum PARSE_FORMAT { SHUNTING_YARD };
@@ -14,7 +14,7 @@ namespace aequatio {
     ~Equation();
     std::string String(int format);
     void Parse(int format);
-    void SetVariables(std::map<std::string, Symbol> vars);
+    void SetVariables(std::map<std::string, Symbol*> vars);
     Symbol operator()();
 
    private:
@@ -22,8 +22,8 @@ namespace aequatio {
     void ShuntingYard();
     void Solve();
     Symbol output;
-    std::map<std::string, Symbol> var_map;
-    std::vector<Symbol> terms_infix, terms_rpn;
+    std::map<std::string, Symbol*> var_map;
+    std::vector<Symbol *> terms_infix, terms_rpn;
     std::string str_infix, str_rpn;
   };
 }

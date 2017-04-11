@@ -3,7 +3,7 @@
 #include <queue>
 #include <stack>
 #include <string>
-#include "../symbol.hpp"
+#include "../classes/class_headers.hpp"
 #include "equation.hpp"
 
 aequatio::Equation::Equation() {
@@ -37,7 +37,7 @@ void aequatio::Equation::Parse(int format) {
   }
 }
 
-void aequatio::Equation::SetVariables(std::map<std::string, Symbol> vars) {
+void aequatio::Equation::SetVariables(std::map<std::string, Symbol*> vars) {
   var_map = vars;
 }
 

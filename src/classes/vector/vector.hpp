@@ -2,24 +2,30 @@
 #define AEQUAITO_VECTOR_HPP
 #include <string>
 #include <vector>
-#include "../../symbol.hpp"
+#include "../class_headers.hpp"
 namespace aequatio {
-  class Vector : public Symbol {
+  class Vector : public Base {
    public:
     Vector();
     Vector(int n);
-    Vector(std::vector<Symbol*> elements);
+    Vector(std::vector<Symbol> elements);
     ~Vector();
+    void Append(Symbol element);
     int Type();
     std::string String();
-    void Sum(Symbol* a, Symbol* b);
-    void Diff(Symbol* a, Symbol* b);
-    void Prod(Symbol* a, Symbol* b);
-    void Quot(Symbol* a, Symbol* b);
-    std::vector<Symbol*> vec_terms;
+    std::vector<Symbol> vec_terms;
     int length;
 
    private:
   };
+
+  Vector operator+(Vector& a, Vector& b);
+  Vector operator-(Vector& a, Vector& b);
+  Vector operator*(Vector& a, Vector& b);
+  Vector operator/(Vector& a, Vector& b);
+  Vector operator+(Vector& a, Symbol& b);
+  Vector operator-(Vector& a, Symbol& b);
+  Vector operator*(Vector& a, Symbol& b);
+  Vector operator/(Vector& a, Symbol& b);
 }
 #endif
