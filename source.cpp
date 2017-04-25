@@ -50,6 +50,7 @@ int main(int argc, char const* argv[]) {
   std::cout << "mat b:" << matb.String() << "\n";
   std::cout << "mat c:" << matc.String() << "\n";
   std::cout << "==========================\n";
+  std::cout << Determinant(mata).String() << "\n";
   pessum::SaveLog("out.log");
   return 0;
 }

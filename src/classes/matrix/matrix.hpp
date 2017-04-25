@@ -20,19 +20,19 @@ namespace aequatio {
    private:
   };
   // Matrix Matrix
-  Matrix operator+(Matrix& a, Matrix& b);
-  Matrix operator-(Matrix& a, Matrix& b);
-  Matrix operator*(Matrix& a, Matrix& b);
-  Matrix operator/(Matrix& a, Matrix& b);
+  Matrix operator+(const Matrix& a, const Matrix& b);
+  Matrix operator-(const Matrix& a, const Matrix& b);
+  Matrix operator*(const Matrix& a, const Matrix& b);
+  Matrix operator/(const Matrix& a, const Matrix& b);
   // Matrix Vector
-  Matrix operator+(Matrix& a, Vector& b);
-  Matrix operator-(Matrix& a, Vector& b);
-  Matrix operator*(Matrix& a, Vector& b);
-  Matrix operator/(Matrix& a, Vector& b);
+  Matrix operator+(const Matrix& a, const Vector& b);
+  Matrix operator-(const Matrix& a, const Vector& b);
+  Matrix operator*(const Matrix& a, const Vector& b);
+  Matrix operator/(const Matrix& a, const Vector& b);
   // Matrix Other
-  Matrix operator+(Matrix& a, Symbol& b);
-  Matrix operator-(Matrix& a, Symbol& b);
-  Matrix operator*(Matrix& a, Symbol& b);
-  Matrix operator/(Matrix& a, Symbol& b);
+  Matrix operator+(const Matrix& a, const Symbol& b);
+  Matrix operator-(const Matrix& a, const Symbol& b);
+  Matrix operator*(const Matrix& a, const Symbol& b);
+  Matrix operator/(const Matrix& a, const Symbol& b);
 }
 #endif

@@ -20,8 +20,8 @@ namespace aequatio {
    private:
   };
   Symbol operator+(const Symbol& a, const Symbol& b);
-  Symbol operator-(Symbol& a, Symbol& b);
-  Symbol operator*(Symbol& a, Symbol& b);
-  Symbol operator/(Symbol& a, Symbol& b);
+  Symbol operator-(const Symbol& a, const Symbol& b);
+  Symbol operator*(const Symbol& a, const Symbol& b);
+  Symbol operator/(const Symbol& a, const Symbol& b);
 }
 #endif

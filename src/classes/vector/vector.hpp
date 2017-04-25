@@ -20,14 +20,14 @@ namespace aequatio {
    private:
   };
   // Vector Vector
-  Vector operator+(Vector& a, Vector& b);
-  Vector operator-(Vector& a, Vector& b);
-  Vector operator*(Vector& a, Vector& b);
-  Vector operator/(Vector& a, Vector& b);
+  Vector operator+(const Vector& a, const Vector& b);
+  Vector operator-(const Vector& a, const Vector& b);
+  Vector operator*(const Vector& a, const Vector& b);
+  Vector operator/(const Vector& a, const Vector& b);
   // Vector Other
-  Vector operator+(Vector& a, Symbol& b);
-  Vector operator-(Vector& a, Symbol& b);
-  Vector operator*(Vector& a, Symbol& b);
-  Vector operator/(Vector& a, Symbol& b);
+  Vector operator+(const Vector& a, const Symbol& b);
+  Vector operator-(const Vector& a, const Symbol& b);
+  Vector operator*(const Vector& a, const Symbol& b);
+  Vector operator/(const Vector& a, const Symbol& b);
 }
 #endif

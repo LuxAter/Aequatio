@@ -14,9 +14,9 @@ namespace aequatio {
 
    private:
   };
-  Number operator+(Number& a, Number& b);
-  Number operator-(Number& a, Number& b);
-  Number operator*(Number& a, Number& b);
-  Number operator/(Number& a, Number& b);
+  Number operator+(const Number& a, const Number& b);
+  Number operator-(const Number& a, const Number& b);
+  Number operator*(const Number& a, const Number& b);
+  Number operator/(const Number& a, const Number& b);
 }
 #endif

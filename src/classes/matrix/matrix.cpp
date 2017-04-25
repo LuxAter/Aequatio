@@ -51,7 +51,7 @@ std::string aequatio::Matrix::String() {
   return (mat_str);
 }
 
-aequatio::Matrix aequatio::operator+(Matrix& a, Matrix& b) {
+aequatio::Matrix aequatio::operator+(const Matrix& a, const Matrix& b) {
   Matrix out(std::min(a.rows, b.rows), std::min(a.cols, b.cols));
   for (int i = 0; i < out.rows; i++) {
     for (int j = 0; j < out.cols; j++) {
@@ -61,7 +61,7 @@ aequatio::Matrix aequatio::operator+(Matrix& a, Matrix& b) {
   return (out);
 }
 
-aequatio::Matrix aequatio::operator-(Matrix& a, Matrix& b) {
+aequatio::Matrix aequatio::operator-(const Matrix& a, const Matrix& b) {
   Matrix out(std::min(a.rows, b.rows), std::min(a.cols, b.cols));
   for (int i = 0; i < out.rows; i++) {
     for (int j = 0; j < out.cols; j++) {
@@ -71,7 +71,7 @@ aequatio::Matrix aequatio::operator-(Matrix& a, Matrix& b) {
   return (out);
 }
 
-aequatio::Matrix aequatio::operator*(Matrix& a, Matrix& b) {
+aequatio::Matrix aequatio::operator*(const Matrix& a, const Matrix& b) {
   Matrix out(std::min(a.rows, b.rows), std::min(a.cols, b.cols));
   for (int i = 0; i < out.rows; i++) {
     for (int j = 0; j < out.cols; j++) {
@@ -81,7 +81,7 @@ aequatio::Matrix aequatio::operator*(Matrix& a, Matrix& b) {
   return (out);
 }
 
-aequatio::Matrix aequatio::operator/(Matrix& a, Matrix& b) {
+aequatio::Matrix aequatio::operator/(const Matrix& a, const Matrix& b) {
   Matrix out(std::min(a.rows, b.rows), std::min(a.cols, b.cols));
   for (int i = 0; i < out.rows; i++) {
     for (int j = 0; j < out.cols; j++) {
@@ -91,7 +91,7 @@ aequatio::Matrix aequatio::operator/(Matrix& a, Matrix& b) {
   return (out);
 }
 
-aequatio::Matrix aequatio::operator+(Matrix& a, Vector& b) {
+aequatio::Matrix aequatio::operator+(const Matrix& a, const Vector& b) {
   Matrix out = a;
   if (a.rows == b.length) {
     for (int i = 0; i < a.cols; i++) {
@@ -114,7 +114,7 @@ aequatio::Matrix aequatio::operator+(Matrix& a, Vector& b) {
   return (out);
 }
 
-aequatio::Matrix aequatio::operator-(Matrix& a, Vector& b) {
+aequatio::Matrix aequatio::operator-(const Matrix& a, const Vector& b) {
   Matrix out = a;
   if (a.rows == b.length) {
     for (int i = 0; i < a.cols; i++) {
@@ -137,7 +137,7 @@ aequatio::Matrix aequatio::operator-(Matrix& a, Vector& b) {
   return (out);
 }
 
-aequatio::Matrix aequatio::operator*(Matrix& a, Vector& b) {
+aequatio::Matrix aequatio::operator*(const Matrix& a, const Vector& b) {
   Matrix out = a;
   if (a.rows == b.length) {
     for (int i = 0; i < a.cols; i++) {
@@ -160,7 +160,7 @@ aequatio::Matrix aequatio::operator*(Matrix& a, Vector& b) {
   return (out);
 }
 
-aequatio::Matrix aequatio::operator/(Matrix& a, Vector& b) {
+aequatio::Matrix aequatio::operator/(const Matrix& a, const Vector& b) {
   Matrix out = a;
   if (a.rows == b.length) {
     for (int i = 0; i < a.cols; i++) {
@@ -184,7 +184,7 @@ aequatio::Matrix aequatio::operator/(Matrix& a, Vector& b) {
   return (out);
 }
 
-aequatio::Matrix aequatio::operator+(Matrix& a, Symbol& b) {
+aequatio::Matrix aequatio::operator+(const Matrix& a, const Symbol& b) {
   Matrix out(a.rows, a.cols);
   for (int i = 0; i < out.rows; i++) {
     for (int j = 0; j < out.cols; j++) {
@@ -194,7 +194,7 @@ aequatio::Matrix aequatio::operator+(Matrix& a, Symbol& b) {
   return (out);
 }
 
-aequatio::Matrix aequatio::operator-(Matrix& a, Symbol& b) {
+aequatio::Matrix aequatio::operator-(const Matrix& a, const Symbol& b) {
   Matrix out(a.rows, a.cols);
   for (int i = 0; i < out.rows; i++) {
     for (int j = 0; j < out.cols; j++) {
@@ -204,7 +204,7 @@ aequatio::Matrix aequatio::operator-(Matrix& a, Symbol& b) {
   return (out);
 }
 
-aequatio::Matrix aequatio::operator*(Matrix& a, Symbol& b) {
+aequatio::Matrix aequatio::operator*(const Matrix& a, const Symbol& b) {
   Matrix out(a.rows, a.cols);
   for (int i = 0; i < out.rows; i++) {
     for (int j = 0; j < out.cols; j++) {
@@ -214,7 +214,7 @@ aequatio::Matrix aequatio::operator*(Matrix& a, Symbol& b) {
   return (out);
 }
 
-aequatio::Matrix aequatio::operator/(Matrix& a, Symbol& b) {
+aequatio::Matrix aequatio::operator/(const Matrix& a, const Symbol& b) {
   Matrix out(a.rows, a.cols);
   for (int i = 0; i < out.rows; i++) {
     for (int j = 0; j < out.cols; j++) {

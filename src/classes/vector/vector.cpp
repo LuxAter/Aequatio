@@ -41,7 +41,7 @@ std::string aequatio::Vector::String() {
   return (vec_str);
 }
 
-aequatio::Vector aequatio::operator+(Vector& a, Vector& b) {
+aequatio::Vector aequatio::operator+(const Vector& a, const Vector& b) {
   Vector out;
   for (int i = 0; i < b.length || i < a.length; i++) {
     if (i >= a.length) {
@@ -55,7 +55,7 @@ aequatio::Vector aequatio::operator+(Vector& a, Vector& b) {
   return (out);
 }
 
-aequatio::Vector aequatio::operator-(Vector& a, Vector& b) {
+aequatio::Vector aequatio::operator-(const Vector& a, const Vector& b) {
   Vector out;
   for (int i = 0; i < b.length || i < a.length; i++) {
     if (i >= a.length) {
@@ -69,7 +69,7 @@ aequatio::Vector aequatio::operator-(Vector& a, Vector& b) {
   return (out);
 }
 
-aequatio::Vector aequatio::operator*(Vector& a, Vector& b) {
+aequatio::Vector aequatio::operator*(const Vector& a, const Vector& b) {
   Vector out;
   for (int i = 0; i < b.length || i < a.length; i++) {
     if (i >= a.length) {
@@ -83,7 +83,7 @@ aequatio::Vector aequatio::operator*(Vector& a, Vector& b) {
   return (out);
 }
 
-aequatio::Vector aequatio::operator/(Vector& a, Vector& b) {
+aequatio::Vector aequatio::operator/(const Vector& a, const Vector& b) {
   Vector out;
   for (int i = 0; i < b.length || i < a.length; i++) {
     if (i >= a.length) {
@@ -97,28 +97,28 @@ aequatio::Vector aequatio::operator/(Vector& a, Vector& b) {
   return (out);
 }
 
-aequatio::Vector aequatio::operator+(Vector& a, Symbol& b) {
+aequatio::Vector aequatio::operator+(const Vector& a, const Symbol& b) {
   Vector out = a;
   for (int i = 0; i < out.length; i++) {
     out.vec_terms[i] = out.vec_terms[i] + b;
   }
   return (out);
 }
-aequatio::Vector aequatio::operator-(Vector& a, Symbol& b) {
+aequatio::Vector aequatio::operator-(const Vector& a, const Symbol& b) {
   Vector out = a;
   for (int i = 0; i < out.length; i++) {
     out.vec_terms[i] = out.vec_terms[i] - b;
   }
   return (out);
 }
-aequatio::Vector aequatio::operator*(Vector& a, Symbol& b) {
+aequatio::Vector aequatio::operator*(const Vector& a, const Symbol& b) {
   Vector out = a;
   for (int i = 0; i < out.length; i++) {
     out.vec_terms[i] = out.vec_terms[i] * b;
   }
   return (out);
 }
-aequatio::Vector aequatio::operator/(Vector& a, Symbol& b) {
+aequatio::Vector aequatio::operator/(const Vector& a, const Symbol& b) {
   Vector out = a;
   for (int i = 0; i < out.length; i++) {
     out.vec_terms[i] = out.vec_terms[i] / b;
