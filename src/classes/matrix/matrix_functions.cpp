@@ -16,7 +16,7 @@ aequatio::Symbol aequatio::Determinant(aequatio::Symbol a) {
     } else if (mat.rows == mat.cols) {
       for (int i = 0; i < mat.cols; i++) {
         Symbol sub_matrix;
-        det = det + (mat.mat_terms[0][i] * Determinant(sub_matrix));
+        // det = det + (mat.mat_terms[0][i] * Determinant(sub_matrix));
       }
     } else {
       pessum::Log(pessum::WARNING, "Matrix must by square not %ix%i",

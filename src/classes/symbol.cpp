@@ -39,7 +39,7 @@ std::string aequatio::Symbol::String() {
   }
 }
 
-aequatio::Symbol aequatio::operator+(Symbol& a, Symbol& b) {
+aequatio::Symbol aequatio::operator+(const Symbol& a, const Symbol& b) {
   Symbol sum;
   int type_a = a.Type(), type_b = b.Type();
   if (type_a == SY_NUMBER && type_b == SY_NUMBER) {
@@ -51,8 +51,10 @@ aequatio::Symbol aequatio::operator+(Symbol& a, Symbol& b) {
         std::make_shared<Vector>(*std::dynamic_pointer_cast<Vector>(a.ptr) +
                                  *std::dynamic_pointer_cast<Vector>(b.ptr));
   } else if (type_a == SY_VECTOR && type_b == SY_NUMBER) {
-    sum.ptr =
-        std::make_shared<Vector>(*std::dynamic_pointer_cast<Vector>(a.ptr) + b);
+    // *std::dynamic_pointer_cast<Vector>(a.ptr) + b;
+    // sum.ptr =
+    //     std::make_shared<Vector>(*std::dynamic_pointer_cast<Vector>(a.ptr) +
+    //     b);
   } else if (type_a == SY_NUMBER && type_b == SY_VECTOR) {
     sum.ptr =
         std::make_shared<Vector>(*std::dynamic_pointer_cast<Vector>(b.ptr) + a);
@@ -107,7 +109,7 @@ aequatio::Symbol aequatio::operator-(Symbol& a, Symbol& b) {
   return (sum);
 }
 
-aequatio::Symbol aequatio::operator*(const Symbol& a, const Symbol& b) {
+aequatio::Symbol aequatio::operator*(Symbol& a, Symbol& b) {
   Symbol sum;
   int type_a = a.Type(), type_b = b.Type();
   if (type_a == SY_NUMBER && type_b == SY_NUMBER) {

@@ -4,6 +4,17 @@
 
 using namespace aequatio;
 
+struct temp {
+  temp() { val = 0; }
+  temp(int v) { val = v; }
+  int val;
+};
+temp operator+(const temp& a, const temp& b) {
+  temp sum;
+  sum = a.val + b.val;
+  return (sum);
+}
+
 void Handle(std::pair<int, std::string> entry) {
   if (entry.first == pessum::ERROR) {
     system("setterm -fore red");
@@ -39,9 +50,6 @@ int main(int argc, char const* argv[]) {
   std::cout << "mat b:" << matb.String() << "\n";
   std::cout << "mat c:" << matc.String() << "\n";
   std::cout << "==========================\n";
-  std::cout << (mata + matb).String() << "\n";
-  std::cout << (mata + veca).String() << "\n";
-  std::cout << (mata + b).String() << "\n";
   pessum::SaveLog("out.log");
   return 0;
 }
