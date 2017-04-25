@@ -2,7 +2,8 @@
 #define AEQUAITO_VECTOR_HPP
 #include <string>
 #include <vector>
-#include "../class_headers.hpp"
+#include "../base.hpp"
+#include "../symbol.hpp"
 namespace aequatio {
   class Vector : public Base {
    public:
@@ -18,11 +19,12 @@ namespace aequatio {
 
    private:
   };
-
+  // Vector Vector
   Vector operator+(Vector& a, Vector& b);
   Vector operator-(Vector& a, Vector& b);
   Vector operator*(Vector& a, Vector& b);
   Vector operator/(Vector& a, Vector& b);
+  // Vector Other
   Vector operator+(Vector& a, Symbol& b);
   Vector operator-(Vector& a, Symbol& b);
   Vector operator*(Vector& a, Symbol& b);

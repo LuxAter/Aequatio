@@ -9,5 +9,6 @@ all: $(OBJ_FILES) subsystem
 
 .PHONY : subsystem
 subsystem:
-	@cd vector && $(MAKE)
+	@cd matrix && $(MAKE)
 	@cd number && $(MAKE)
+	@cd vector && $(MAKE)

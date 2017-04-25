@@ -3,10 +3,11 @@
 #include <string>
 #include "class_headers.hpp"
 #include "symbol.hpp"
+#include "types.hpp"
 
 aequatio::Symbol::Symbol() {}
 
-aequatio::Symbol::~Symbol() {}
+aequatio::Symbol::~Symbol() { ptr = NULL; }
 
 aequatio::Symbol::Symbol(double val) {
   ptr = std::make_shared<Number>(Number(val));
@@ -16,9 +17,13 @@ aequatio::Symbol::Symbol(std::vector<Symbol> val) {
   ptr = std::make_shared<Vector>(Vector(val));
 }
 
+aequatio::Symbol::Symbol(std::vector<std::vector<Symbol>> val) {
+  ptr = std::make_shared<Matrix>(Matrix(val));
+}
+
 aequatio::Symbol::Symbol(std::string str) {}
 
-int aequatio::Symbol::Type() {
+int aequatio::Symbol::Type() const {
   if (ptr != NULL) {
     return (ptr->Type());
   } else {
@@ -51,6 +56,24 @@ aequatio::Symbol aequatio::operator+(Symbol& a, Symbol& b) {
   } else if (type_a == SY_NUMBER && type_b == SY_VECTOR) {
     sum.ptr =
         std::make_shared<Vector>(*std::dynamic_pointer_cast<Vector>(b.ptr) + a);
+  } else if (type_a == SY_MATRIX && type_b == SY_MATRIX) {
+    sum.ptr =
+        std::make_shared<Matrix>(*std::dynamic_pointer_cast<Matrix>(a.ptr) +
+                                 *std::dynamic_pointer_cast<Matrix>(b.ptr));
+  } else if (type_a == SY_MATRIX && type_b == SY_VECTOR) {
+    sum.ptr =
+        std::make_shared<Matrix>(*std::dynamic_pointer_cast<Matrix>(a.ptr) +
+                                 *std::dynamic_pointer_cast<Vector>(b.ptr));
+  } else if (type_a == SY_VECTOR && type_b == SY_MATRIX) {
+    sum.ptr =
+        std::make_shared<Matrix>(*std::dynamic_pointer_cast<Matrix>(b.ptr) +
+                                 *std::dynamic_pointer_cast<Vector>(a.ptr));
+  } else if (type_a == SY_MATRIX && type_b == SY_NUMBER) {
+    sum.ptr =
+        std::make_shared<Matrix>(*std::dynamic_pointer_cast<Matrix>(a.ptr) + b);
+  } else if (type_a == SY_NUMBER && type_b == SY_MATRIX) {
+    sum.ptr =
+        std::make_shared<Matrix>(*std::dynamic_pointer_cast<Matrix>(b.ptr) + a);
   } else {
     pessum::Log(pessum::WARNING,
                 "No %c operator acepting type %i and type %i symbols",
@@ -84,7 +107,7 @@ aequatio::Symbol aequatio::operator-(Symbol& a, Symbol& b) {
   return (sum);
 }
 
-aequatio::Symbol aequatio::operator*(Symbol& a, Symbol& b) {
+aequatio::Symbol aequatio::operator*(const Symbol& a, const Symbol& b) {
   Symbol sum;
   int type_a = a.Type(), type_b = b.Type();
   if (type_a == SY_NUMBER && type_b == SY_NUMBER) {

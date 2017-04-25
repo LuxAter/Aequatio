@@ -1,7 +1,8 @@
 #include <pessum.h>
 #include <vector>
 #include "../../aequatio.hpp"
-#include "../class_headers.hpp"
+#include "../symbol.hpp"
+#include "../types.hpp"
 #include "vector.hpp"
 
 aequatio::Vector::Vector() { length = 0; }
@@ -120,7 +121,7 @@ aequatio::Vector aequatio::operator*(Vector& a, Symbol& b) {
 aequatio::Vector aequatio::operator/(Vector& a, Symbol& b) {
   Vector out = a;
   for (int i = 0; i < out.length; i++) {
-    out.vec_terms[i] = b / out.vec_terms[i];
+    out.vec_terms[i] = out.vec_terms[i] / b;
   }
   return (out);
 }

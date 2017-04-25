@@ -3,8 +3,7 @@
 #include <limits>
 #include <sstream>
 #include <string>
-#include "../../aequatio.hpp"
-#include "../class_headers.hpp"
+#include "../types.hpp"
 #include "number.hpp"
 
 aequatio::Number::Number() {}

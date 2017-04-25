@@ -2,6 +2,7 @@
 #include <iostream>
 #include <string>
 #include "base.hpp"
+#include "types.hpp"
 
 aequatio::Base::Base() {}
 

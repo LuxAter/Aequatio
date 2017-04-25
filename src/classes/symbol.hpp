@@ -10,18 +10,18 @@ namespace aequatio {
     Symbol();
     Symbol(double val);
     Symbol(std::vector<Symbol> val);
+    Symbol(std::vector<std::vector<Symbol>> val);
     Symbol(std::string str);
     ~Symbol();
-    int Type();
+    int Type() const;
     std::string String();
-    // Base* ptr;
     std::shared_ptr<Base> ptr;
 
    private:
   };
   Symbol operator+(Symbol& a, Symbol& b);
   Symbol operator-(Symbol& a, Symbol& b);
-  Symbol operator*(Symbol& a, Symbol& b);
+  Symbol operator*(const Symbol& a, const Symbol& b);
   Symbol operator/(Symbol& a, Symbol& b);
 }
 #endif

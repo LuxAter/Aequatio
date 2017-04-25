@@ -25,6 +25,9 @@ int main(int argc, char const* argv[]) {
   Symbol veca({a, b, c});
   Symbol vecb({b, c, a});
   Symbol vecc({c, a, b});
+  Symbol mata({{a, b, c}, {b, c, a}, {c, a, b}});
+  Symbol matb({{b, c, a}, {c, a, b}, {a, b, c}});
+  Symbol matc({{c, a, b}, {a, b, c}, {b, c, a}});
   std::cout << "a:" << a.String() << "\n";
   std::cout << "b:" << b.String() << "\n";
   std::cout << "c:" << c.String() << "\n";
@@ -32,9 +35,13 @@ int main(int argc, char const* argv[]) {
   std::cout << "vec a:" << veca.String() << "\n";
   std::cout << "vec b:" << vecb.String() << "\n";
   std::cout << "vec c:" << vecc.String() << "\n";
+  std::cout << "mat a:" << mata.String() << "\n";
+  std::cout << "mat b:" << matb.String() << "\n";
+  std::cout << "mat c:" << matc.String() << "\n";
   std::cout << "==========================\n";
-  Symbol dot = Dot(veca, vecb);
-  std::cout << "<" << veca.String() << "," << vecb.String() << "> = " << dot.String()  << "\n";
+  std::cout << (mata + matb).String() << "\n";
+  std::cout << (mata + veca).String() << "\n";
+  std::cout << (mata + b).String() << "\n";
   pessum::SaveLog("out.log");
   return 0;
 }

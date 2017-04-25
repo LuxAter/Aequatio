@@ -2,7 +2,6 @@
 #define AEQUATIO_CLASS_BASE_HPP
 #include <string>
 namespace aequatio {
-  enum SYMBOL_TYPES { SY_NONE, SY_NUMBER, SY_VECTOR };
   class Base {
    public:
     Base();

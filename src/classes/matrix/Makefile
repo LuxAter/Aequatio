@@ -9,6 +9,3 @@ all: $(OBJ_FILES) subsystem
 
 .PHONY : subsystem
 subsystem:
-	@setterm -fore 3; printf "=====Classes=====\n"; setterm -fore 7
-	@cd classes && $(MAKE)
-	# @cd equation && $(MAKE)
