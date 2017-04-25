@@ -76,8 +76,9 @@ aequatio::Symbol aequatio::operator+(const Symbol& a, const Symbol& b) {
         std::make_shared<Matrix>(*std::dynamic_pointer_cast<Matrix>(b.ptr) + a);
   } else {
     pessum::Log(pessum::WARNING,
-                "No %c operator acepting type %i and type %i symbols",
-                "Symbol/operator+", '+', type_a, type_b);
+                "No %c operator acepting type %s and type %s symbols",
+                "symbol/operator+", '+', SymbolName(type_a).c_str(),
+                SymbolName(type_b).c_str());
   }
   return (sum);
 }
@@ -99,10 +100,29 @@ aequatio::Symbol aequatio::operator-(const Symbol& a, const Symbol& b) {
   } else if (type_a == SY_NUMBER && type_b == SY_VECTOR) {
     sum.ptr =
         std::make_shared<Vector>(*std::dynamic_pointer_cast<Vector>(b.ptr) - a);
+  } else if (type_a == SY_MATRIX && type_b == SY_MATRIX) {
+    sum.ptr =
+        std::make_shared<Matrix>(*std::dynamic_pointer_cast<Matrix>(a.ptr) -
+                                 *std::dynamic_pointer_cast<Matrix>(b.ptr));
+  } else if (type_a == SY_MATRIX && type_b == SY_VECTOR) {
+    sum.ptr =
+        std::make_shared<Matrix>(*std::dynamic_pointer_cast<Matrix>(a.ptr) -
+                                 *std::dynamic_pointer_cast<Vector>(b.ptr));
+  } else if (type_a == SY_VECTOR && type_b == SY_MATRIX) {
+    sum.ptr =
+        std::make_shared<Matrix>(*std::dynamic_pointer_cast<Matrix>(b.ptr) -
+                                 *std::dynamic_pointer_cast<Vector>(a.ptr));
+  } else if (type_a == SY_MATRIX && type_b == SY_NUMBER) {
+    sum.ptr =
+        std::make_shared<Matrix>(*std::dynamic_pointer_cast<Matrix>(a.ptr) - b);
+  } else if (type_a == SY_NUMBER && type_b == SY_MATRIX) {
+    sum.ptr =
+        std::make_shared<Matrix>(*std::dynamic_pointer_cast<Matrix>(b.ptr) - a);
   } else {
     pessum::Log(pessum::WARNING,
-                "No %c operator acepting type %i and type %i symbols",
-                "Symbol/operator-", '-', type_a, type_b);
+                "No %c operator acepting type %s and type %s symbols",
+                "symbol/operator-", '-', SymbolName(type_a).c_str(),
+                SymbolName(type_b).c_str());
   }
   return (sum);
 }
@@ -124,10 +144,29 @@ aequatio::Symbol aequatio::operator*(const Symbol& a, const Symbol& b) {
   } else if (type_a == SY_NUMBER && type_b == SY_VECTOR) {
     sum.ptr =
         std::make_shared<Vector>(*std::dynamic_pointer_cast<Vector>(b.ptr) * a);
+  } else if (type_a == SY_MATRIX && type_b == SY_MATRIX) {
+    sum.ptr =
+        std::make_shared<Matrix>(*std::dynamic_pointer_cast<Matrix>(a.ptr) *
+                                 *std::dynamic_pointer_cast<Matrix>(b.ptr));
+  } else if (type_a == SY_MATRIX && type_b == SY_VECTOR) {
+    sum.ptr =
+        std::make_shared<Matrix>(*std::dynamic_pointer_cast<Matrix>(a.ptr) *
+                                 *std::dynamic_pointer_cast<Vector>(b.ptr));
+  } else if (type_a == SY_VECTOR && type_b == SY_MATRIX) {
+    sum.ptr =
+        std::make_shared<Matrix>(*std::dynamic_pointer_cast<Matrix>(b.ptr) *
+                                 *std::dynamic_pointer_cast<Vector>(a.ptr));
+  } else if (type_a == SY_MATRIX && type_b == SY_NUMBER) {
+    sum.ptr =
+        std::make_shared<Matrix>(*std::dynamic_pointer_cast<Matrix>(a.ptr) * b);
+  } else if (type_a == SY_NUMBER && type_b == SY_MATRIX) {
+    sum.ptr =
+        std::make_shared<Matrix>(*std::dynamic_pointer_cast<Matrix>(b.ptr) * a);
   } else {
     pessum::Log(pessum::WARNING,
-                "No %c operator acepting type %i and type %i symbols",
-                "Symbol/operator*", '*', type_a, type_b);
+                "No %c operator acepting type %s and type %s symbols",
+                "symbol/operator*", '*', SymbolName(type_a).c_str(),
+                SymbolName(type_b).c_str());
   }
   return (sum);
 }
@@ -149,10 +188,29 @@ aequatio::Symbol aequatio::operator/(const Symbol& a, const Symbol& b) {
   } else if (type_a == SY_NUMBER && type_b == SY_VECTOR) {
     sum.ptr =
         std::make_shared<Vector>(*std::dynamic_pointer_cast<Vector>(b.ptr) / a);
+  } else if (type_a == SY_MATRIX && type_b == SY_MATRIX) {
+    sum.ptr =
+        std::make_shared<Matrix>(*std::dynamic_pointer_cast<Matrix>(a.ptr) /
+                                 *std::dynamic_pointer_cast<Matrix>(b.ptr));
+  } else if (type_a == SY_MATRIX && type_b == SY_VECTOR) {
+    sum.ptr =
+        std::make_shared<Matrix>(*std::dynamic_pointer_cast<Matrix>(a.ptr) /
+                                 *std::dynamic_pointer_cast<Vector>(b.ptr));
+  } else if (type_a == SY_VECTOR && type_b == SY_MATRIX) {
+    sum.ptr =
+        std::make_shared<Matrix>(*std::dynamic_pointer_cast<Matrix>(b.ptr) /
+                                 *std::dynamic_pointer_cast<Vector>(a.ptr));
+  } else if (type_a == SY_MATRIX && type_b == SY_NUMBER) {
+    sum.ptr =
+        std::make_shared<Matrix>(*std::dynamic_pointer_cast<Matrix>(a.ptr) / b);
+  } else if (type_a == SY_NUMBER && type_b == SY_MATRIX) {
+    sum.ptr =
+        std::make_shared<Matrix>(*std::dynamic_pointer_cast<Matrix>(b.ptr) / a);
   } else {
     pessum::Log(pessum::WARNING,
-                "No %c operator acepting type %i and type %i symbols",
-                "Symbol/operator/", '/', type_a, type_b);
+                "No %c operator acepting type %s and type %s symbols",
+                "symbol/operator/", '/', SymbolName(type_a).c_str(),
+                SymbolName(type_b).c_str());
   }
   return (sum);
 }

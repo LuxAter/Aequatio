@@ -36,7 +36,12 @@ aequatio::Number aequatio::operator*(const Number& a, const Number& b) {
 
 aequatio::Number aequatio::operator/(const Number& a, const Number& b) {
   if (fabs(b.val) <= std::numeric_limits<double>::min()) {
-    pessum::Log(pessum::WARNING, "Dividing by %f", "Number/operator/", b.val);
+    pessum::Log(pessum::WARNING, "Dividing by %f", "number/number/operator/",
+                b.val);
   }
   return (Number(a.val / b.val));
+}
+
+bool aequatio::operator==(const Number& a, const Number& b) {
+  return (a.val == b.val);
 }

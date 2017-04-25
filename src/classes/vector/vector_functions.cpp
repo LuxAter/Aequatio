@@ -17,8 +17,9 @@ aequatio::Symbol aequatio::DotProduct(aequatio::Symbol a, aequatio::Symbol b) {
       dot = dot + vec_c.vec_terms[i];
     }
   } else {
-    pessum::Log(pessum::WARNING, "No Dot Product for type %i and %i",
-                "vector/vector_functions/DotProduct", type_a, type_b);
+    pessum::Log(pessum::WARNING, "No Dot Product for type %s and %s",
+                "vector/vector_functions/DotProduct",
+                SymbolName(type_a).c_str(), SymbolName(type_b).c_str());
   }
   return (dot);
 }

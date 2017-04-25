@@ -18,5 +18,6 @@ namespace aequatio {
   Number operator-(const Number& a, const Number& b);
   Number operator*(const Number& a, const Number& b);
   Number operator/(const Number& a, const Number& b);
+  bool operator==(const Number& a, const Number& b);
 }
 #endif

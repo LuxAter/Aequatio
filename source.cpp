@@ -39,6 +39,7 @@ int main(int argc, char const* argv[]) {
   Symbol mata({{a, b, c}, {b, c, a}, {c, a, b}});
   Symbol matb({{b, c, a}, {c, a, b}, {a, b, c}});
   Symbol matc({{c, a, b}, {a, b, c}, {b, c, a}});
+  Symbol matd({{a, b, c, d}, {a, b, c, d}, {a, b, c, d}, {a, b, c, d}});
   std::cout << "a:" << a.String() << "\n";
   std::cout << "b:" << b.String() << "\n";
   std::cout << "c:" << c.String() << "\n";
@@ -50,7 +51,8 @@ int main(int argc, char const* argv[]) {
   std::cout << "mat b:" << matb.String() << "\n";
   std::cout << "mat c:" << matc.String() << "\n";
   std::cout << "==========================\n";
-  std::cout << Determinant(mata).String() << "\n";
+  std::cout << "det:" << Determinant(mata).String() << "\n";
+  std::cout << "trace:" << Trace(mata).String() << "\n";
   pessum::SaveLog("out.log");
   return 0;
 }

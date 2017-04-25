@@ -1,8 +1,10 @@
+#include <math.h>
 #include <pessum.h>
+#include <iostream>
+#include "../number/number.hpp"
 #include "../symbol.hpp"
 #include "../types.hpp"
 #include "matrix.hpp"
-#include <iostream>
 #include "matrix_functions.hpp"
 
 aequatio::Symbol aequatio::Determinant(aequatio::Symbol a) {
@@ -11,25 +13,27 @@ aequatio::Symbol aequatio::Determinant(aequatio::Symbol a) {
   if (type == SY_MATRIX) {
     Matrix mat = *std::dynamic_pointer_cast<Matrix>(a.ptr);
     if (mat.rows == 2 && mat.cols == 2) {
-      det = (mat.mat_terms[0][0] * mat.mat_terms[1][1]) - (mat.mat_terms[1][0] * mat.mat_terms[0][1]);
+      det = (mat.mat_terms[0][0] * mat.mat_terms[1][1]) -
+            (mat.mat_terms[1][0] * mat.mat_terms[0][1]);
     } else if (mat.rows == mat.cols) {
       for (int i = 0; i < mat.cols; i++) {
-        std::vector<std::vector<Symbol>> sub_mat_terms(mat.rows - 1, std::vector<Symbol>(mat.cols - 1, Symbol()));
-        for(int j = 1; j < mat.rows; j++){
+        std::vector<std::vector<Symbol>> sub_mat_terms(
+            mat.rows - 1, std::vector<Symbol>(mat.cols - 1, Symbol()));
+        for (int j = 1; j < mat.rows; j++) {
           int sub_k = 0;
-          for(int k = 0; k < mat.cols; k++){
-            if(k != i){
-              sub_mat_terms[j-1][sub_k] = mat.mat_terms[j][k];
+          for (int k = 0; k < mat.cols; k++) {
+            if (k != i) {
+              sub_mat_terms[j - 1][sub_k] = mat.mat_terms[j][k];
               sub_k++;
             }
           }
         }
         Symbol sub_matrix(sub_mat_terms);
-        std::cout << sub_matrix.String() << "\n";
-        if(det.Type() == 0){
+        if (det.Type() == 0) {
           det = mat.mat_terms[0][i] * Determinant(sub_matrix);
-        } else{
-          det = det + (mat.mat_terms[0][i] * Determinant(sub_matrix));
+        } else {
+          det = det + (Symbol(pow(-1, i)) * mat.mat_terms[0][i] *
+                       Determinant(sub_matrix));
         }
       }
     } else {
@@ -37,8 +41,9 @@ aequatio::Symbol aequatio::Determinant(aequatio::Symbol a) {
                   "matrix/matrix_functions/Determinant", mat.rows, mat.cols);
     }
   } else {
-    pessum::Log(pessum::WARNING, "Symbol must be of type %i not %i",
-                "matrix/matrix_functions/Determinant", SY_MATRIX, type);
+    pessum::Log(pessum::WARNING, "Symbol must be of type %s not %s",
+                "matrix/matrix_functions/Determinant",
+                SymbolName(SY_MATRIX).c_str(), SymbolName(type).c_str());
   }
   return (det);
 }
@@ -47,6 +52,18 @@ aequatio::Symbol aequatio::Trace(aequatio::Symbol a) {
   int type = a.Type();
   Symbol trace;
   if (type == SY_MATRIX) {
+    Matrix mat = *std::dynamic_pointer_cast<Matrix>(a.ptr);
+    for (int i = 0; i < mat.rows && i < mat.cols; i++) {
+      if (trace.Type() == 0) {
+        trace = mat.mat_terms[i][i];
+      } else {
+        trace = trace + mat.mat_terms[i][i];
+      }
+    }
+  } else {
+    pessum::Log(pessum::WARNING, "Symbol must be of type %s not %s",
+                "matrix/matrix_functions/Trace", SymbolName(SY_MATRIX).c_str(),
+                SymbolName(type).c_str());
   }
   return (trace);
 }
@@ -55,6 +72,16 @@ aequatio::Symbol aequatio::Inverse(aequatio::Symbol a) {
   int type = a.Type();
   Symbol inv;
   if (type == SY_MATRIX) {
+    if (*std::dynamic_pointer_cast<Number>(Determinant(a).ptr) == Number()) {
+      pessum::Log(pessum::WARNING,
+                  "The inverse does not exist as the determinant is %s",
+                  "matrix/matrix_functions/Inverse", "0");
+    } else {
+    }
+  } else {
+    pessum::Log(pessum::WARNING, "Symbol must be of type %s not %s",
+                "matrix/matrix_functions/Determinant",
+                SymbolName(SY_MATRIX).c_str(), SymbolName(type).c_str());
   }
   return (inv);
 }
