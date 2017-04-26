@@ -72,12 +72,38 @@ aequatio::Symbol aequatio::Inverse(aequatio::Symbol a) {
   int type = a.Type();
   Symbol inv;
   if (type == SY_MATRIX) {
+    Matrix mat = *std::dynamic_pointer_cast<Matrix>(a.ptr);
     if (Determinant(a) == 0) {
       pessum::Log(pessum::WARNING,
                   "The inverse does not exist as the determinant is %s",
                   "matrix/matrix_functions/Inverse", "0");
     } else {
       Symbol det = Determinant(a);
+      std::vector<std::vector<Symbol>> inverse_terms(
+          mat.rows, std::vector<Symbol>(mat.cols, Symbol()));
+      for (int i = 0; i < mat.rows; i++) {
+        for (int j = 0; j < mat.cols; j++) {
+          std::vector<std::vector<Symbol>> sub_matrix_terms(
+              mat.rows - 1, std::vector<Symbol>(mat.cols - 1, Symbol(0)));
+          int sub_row = 0;
+          for (int k = 0; k < mat.rows; k++) {
+            int sub_col = 0;
+            if (k != i) {
+              for (int l = 0; l < mat.cols; l++) {
+                if (l != j) {
+                  sub_matrix_terms[sub_row][sub_col] = mat.mat_terms[k][l];
+                  sub_col++;
+                }
+              }
+              sub_row++;
+            }
+          }
+          Symbol sub_matrix(sub_matrix_terms);
+          inverse_terms[i][j] = (Symbol(pow(-1, i)) * Symbol(pow(-1, j))) * Determinant(sub_matrix);
+        }
+      }
+      inv = Transpose(Symbol(inverse_terms));
+      inv = inv / det;
     }
   } else {
     pessum::Log(pessum::WARNING, "Symbol must be of type %s not %s",
