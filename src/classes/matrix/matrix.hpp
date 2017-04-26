@@ -10,6 +10,7 @@ namespace aequatio {
    public:
     Matrix();
     Matrix(int n, int m);
+    Matrix(int n, int m, Symbol val);
     Matrix(std::vector<std::vector<Symbol>> elements);
     ~Matrix();
     int Type();
@@ -19,6 +20,13 @@ namespace aequatio {
 
    private:
   };
+  //Boolian Operators
+  bool operator==(const Matrix& a, const Matrix& b);
+  bool operator<(const Matrix& a, const Matrix& b);
+  bool operator!=(const Matrix& a, const Matrix& b);
+  bool operator>(const Matrix& a, const Matrix& b);
+  bool operator<=(const Matrix& a, const Matrix& b);
+  bool operator>=(const Matrix& a, const Matrix& b);
   // Matrix Matrix
   Matrix operator+(const Matrix& a, const Matrix& b);
   Matrix operator-(const Matrix& a, const Matrix& b);

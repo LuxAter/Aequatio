@@ -45,3 +45,23 @@ aequatio::Number aequatio::operator/(const Number& a, const Number& b) {
 bool aequatio::operator==(const Number& a, const Number& b) {
   return (a.val == b.val);
 }
+
+bool aequatio::operator<(const Number& a, const Number& b){
+  return(a.val < b.val);
+}
+
+bool aequatio::operator!=(const Number& a, const Number& b){
+  return(!(a.val == b.val));
+}
+
+bool aequatio::operator>(const Number& a, const Number& b){
+  return(b.val > a.val);
+}
+
+bool aequatio::operator<=(const Number& a, const Number& b){
+  return(!(b.val < a.val));
+}
+
+bool aequatio::operator>=(const Number& a, const Number& b){
+  return(!(a.val < b.val));
+}

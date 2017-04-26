@@ -12,6 +12,11 @@ aequatio::Vector::Vector(int n) {
   vec_terms = std::vector<Symbol>(n, Symbol());
 }
 
+aequatio::Vector::Vector(int n, Symbol val){
+  length = n;
+  vec_terms = std::vector<Symbol>(n, val);
+}
+
 aequatio::Vector::Vector(std::vector<Symbol> elements) {
   vec_terms = elements;
   length = vec_terms.size();
@@ -39,6 +44,43 @@ std::string aequatio::Vector::String() {
   }
   vec_str += ">";
   return (vec_str);
+}
+
+bool aequatio::operator==(const Vector& a, const Vector& b) {
+  bool same = true;
+  if (a.length != b.length) {
+    same = false;
+  }
+  for (int i = 0; i < a.length && i < b.length && same == true; i++) {
+    if (a.vec_terms[i] != b.vec_terms[i]) {
+      same = false;
+    }
+  }
+  return (same);
+}
+
+bool aequatio::operator<(const Vector& a, const Vector& b) {
+  bool less = true;
+  for (int i = 0; i < a.length && i < b.length && less == true; i++) {
+    if (a.vec_terms[i] > b.vec_terms[i]) {
+      less = false;
+    }
+  }
+  return (less);
+}
+
+bool aequatio::operator!=(const Vector& a, const Vector& b) {
+  return (!(a == b));
+}
+
+bool aequatio::operator>(const Vector& a, const Vector& b) { return (b < a); }
+
+bool aequatio::operator<=(const Vector& a, const Vector& b) {
+  return (!(b < a));
+}
+
+bool aequatio::operator>=(const Vector& a, const Vector& b) {
+  return (!(a < b));
 }
 
 aequatio::Vector aequatio::operator+(const Vector& a, const Vector& b) {

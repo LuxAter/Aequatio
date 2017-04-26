@@ -72,11 +72,12 @@ aequatio::Symbol aequatio::Inverse(aequatio::Symbol a) {
   int type = a.Type();
   Symbol inv;
   if (type == SY_MATRIX) {
-    if (*std::dynamic_pointer_cast<Number>(Determinant(a).ptr) == Number()) {
+    if (Determinant(a) == 0) {
       pessum::Log(pessum::WARNING,
                   "The inverse does not exist as the determinant is %s",
                   "matrix/matrix_functions/Inverse", "0");
     } else {
+      Symbol det = Determinant(a);
     }
   } else {
     pessum::Log(pessum::WARNING, "Symbol must be of type %s not %s",
@@ -92,4 +93,24 @@ aequatio::Symbol aequatio::EchelonForm(aequatio::Symbol a) {
   if (type == SY_MATRIX) {
   }
   return (ech);
+}
+
+aequatio::Symbol aequatio::Transpose(aequatio::Symbol a){
+  int type = a.Type();
+  Symbol transpose;
+  if(type == SY_MATRIX){
+    Matrix mat = *std::dynamic_pointer_cast<Matrix>(a.ptr);
+    std::vector<std::vector<Symbol>> transpose_terms(mat.cols, std::vector<Symbol>(mat.rows, Symbol()));
+    for(int i = 0; i < mat.rows; i++){
+      for(int j = 0; j < mat.cols; j++){
+        transpose_terms[j][i] = mat.mat_terms[i][j];
+      }
+    }
+    transpose = Symbol(transpose_terms);
+  }else{
+    pessum::Log(pessum::WARNING, "Symbol must be of type %s not %s",
+                "matrix/matrix_functions/Transpose",
+                SymbolName(SY_MATRIX).c_str(), SymbolName(type).c_str());
+  }
+  return(transpose);
 }

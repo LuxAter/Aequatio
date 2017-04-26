@@ -18,6 +18,12 @@ aequatio::Matrix::Matrix(int m, int n) {
       rows, std::vector<Symbol>(cols, Symbol()));
 }
 
+aequatio::Matrix::Matrix(int m, int n, Symbol val){
+  rows = m;
+  cols = n;
+  mat_terms = std::vector<std::vector<Symbol>>(rows, std::vector<Symbol>(cols,val));
+}
+
 aequatio::Matrix::Matrix(std::vector<std::vector<Symbol>> elements) {
   rows = elements.size();
   cols = elements[0].size();
@@ -49,6 +55,47 @@ std::string aequatio::Matrix::String() {
   }
   mat_str += "]";
   return (mat_str);
+}
+
+bool aequatio::operator==(const Matrix& a, const Matrix& b) {
+  bool same = true;
+  if (a.rows != b.rows || a.cols != b.cols) {
+    same = false;
+  }
+  for (int i = 0; i < a.rows && same == true; i++) {
+    for (int j = 0; j < a.cols && same == true; j++) {
+      if (a.mat_terms[i][j] != b.mat_terms[i][j]) {
+        same = false;
+      }
+    }
+  }
+  return (same);
+}
+
+bool aequatio::operator<(const Matrix& a, const Matrix& b) {
+  bool less = true;
+  for (int i = 0; i < a.rows && i < b.rows && less == true; i++) {
+    for (int j = 0; j < a.cols && j < b.cols && less == true; j++) {
+      if (a.mat_terms[i][j] > b.mat_terms[i][j]) {
+        less = false;
+      }
+    }
+  }
+  return (less);
+}
+
+bool aequatio::operator!=(const Matrix& a, const Matrix& b) {
+  return (!(a == b));
+}
+
+bool aequatio::operator>(const Matrix& a, const Matrix& b) { return (b > a); }
+
+bool aequatio::operator<=(const Matrix& a, const Matrix& b) {
+  return (!(b < a));
+}
+
+bool aequatio::operator>=(const Matrix& a, const Matrix& b) {
+  return (!(a < b));
 }
 
 aequatio::Matrix aequatio::operator+(const Matrix& a, const Matrix& b) {

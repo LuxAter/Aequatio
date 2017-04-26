@@ -6,5 +6,6 @@ namespace aequatio {
   Symbol Trace(Symbol a);
   Symbol Inverse(Symbol a);
   Symbol EchelonForm(Symbol a);
+  Symbol Transpose(Symbol a);
 }
 #endif

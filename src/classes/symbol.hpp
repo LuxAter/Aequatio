@@ -19,15 +19,24 @@ namespace aequatio {
 
    private:
   };
+  //Symbol Operators
   Symbol operator+(const Symbol& a, const Symbol& b);
   Symbol operator-(const Symbol& a, const Symbol& b);
   Symbol operator*(const Symbol& a, const Symbol& b);
   Symbol operator/(const Symbol& a, const Symbol& b);
+  //Boolian Operators
   bool operator==(const Symbol& a, const Symbol& b);
   bool operator<(const Symbol& a, const Symbol& b);
   bool operator!=(const Symbol& a, const Symbol& b);
   bool operator>(const Symbol& a, const Symbol& b);
   bool operator<=(const Symbol& a, const Symbol& b);
   bool operator>=(const Symbol& a, const Symbol& b);
+
+  bool operator==(const Symbol& a, const int& b);
+  bool operator<(const Symbol& a, const int& b);
+  bool operator!=(const Symbol& a, const int& b);
+  bool operator>(const Symbol& a, const int& b);
+  bool operator<=(const Symbol& a, const int& b);
+  bool operator>=(const Symbol& a, const int& b);
 }
 #endif

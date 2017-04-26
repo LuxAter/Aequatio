@@ -50,7 +50,9 @@ int main(int argc, char const* argv[]) {
   std::cout << "mat a:" << mata.String() << "\n";
   std::cout << "mat b:" << matb.String() << "\n";
   std::cout << "mat c:" << matc.String() << "\n";
+  std::cout << "mat d:" << matd.String() << "\n";
   std::cout << "==========================\n";
+  std::cout << Transpose(matd).String() << "\n";
   std::cout << "det:" << Determinant(mata).String() << "\n";
   std::cout << "trace:" << Trace(mata).String() << "\n";
   pessum::SaveLog("out.log");

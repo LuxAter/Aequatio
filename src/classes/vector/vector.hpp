@@ -9,6 +9,7 @@ namespace aequatio {
    public:
     Vector();
     Vector(int n);
+    Vector(int n, Symbol val);
     Vector(std::vector<Symbol> elements);
     ~Vector();
     void Append(Symbol element);
@@ -19,6 +20,13 @@ namespace aequatio {
 
    private:
   };
+  // Boolian
+  bool operator==(const Vector& a, const Vector& b);
+  bool operator<(const Vector& a, const Vector& b);
+  bool operator!=(const Vector& a, const Vector& b);
+  bool operator>(const Vector& a, const Vector &b);
+  bool operator<=(const Vector& a, const Vector &b);
+  bool operator>=(const Vector& a, const Vector &b);
   // Vector Vector
   Vector operator+(const Vector& a, const Vector& b);
   Vector operator-(const Vector& a, const Vector& b);
