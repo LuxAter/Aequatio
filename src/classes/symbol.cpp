@@ -214,3 +214,19 @@ aequatio::Symbol aequatio::operator/(const Symbol& a, const Symbol& b) {
   }
   return (sum);
 }
+ 
+bool aequatio::operator==(const Symbol& a, const Symbol& b){
+  int type_a = a.Type(), type_b = b.Type();
+  if(type_a != type_b){
+    return(false);
+  }else{
+
+  }
+  return(false);
+}
+
+bool aequatio::operator<(const Symbol& a, const Symbol& b){}
+bool aequatio::operator!=(const Symbol& a, const Symbol& b){}
+bool aequatio::operator>(const Symbol& a, const Symbol& b){}
+bool aequatio::operator<=(const Symbol& a, const Symbol& b){}
+bool aequatio::operator>=(const Symbol& a, const Symbol& b){}

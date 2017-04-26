@@ -23,5 +23,11 @@ namespace aequatio {
   Symbol operator-(const Symbol& a, const Symbol& b);
   Symbol operator*(const Symbol& a, const Symbol& b);
   Symbol operator/(const Symbol& a, const Symbol& b);
+  bool operator==(const Symbol& a, const Symbol& b);
+  bool operator<(const Symbol& a, const Symbol& b);
+  bool operator!=(const Symbol& a, const Symbol& b);
+  bool operator>(const Symbol& a, const Symbol& b);
+  bool operator<=(const Symbol& a, const Symbol& b);
+  bool operator>=(const Symbol& a, const Symbol& b);
 }
 #endif
