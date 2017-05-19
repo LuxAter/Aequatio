@@ -5,7 +5,7 @@ namespace aequatio {
   Symbol Determinant(Symbol a);
   Symbol Trace(Symbol a);
   Symbol Inverse(Symbol a);
-  Symbol EchelonForm(Symbol a);
+  Symbol RowEchelonForm(Symbol a);
   Symbol Transpose(Symbol a);
 }
 #endif

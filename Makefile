@@ -1,11 +1,12 @@
-ifndef VERBOSE
-.SILENT:
+ifndef .VERBOSE
+  # .SILENT:
 endif
 export COMPILER = clang++
 export FLAGS = -MMD -std=c++11 -w -c
 CPP_FILES = $(wildcard *.cpp)
-TOP_DIR = $(notdir $(CPP_FILES:.cpp=.o))
+TOP_DIR = $(CPP_FILES:.cpp=.o)
 OBJ_FILES := $(shell find -name '*.o')
+OBJ_LIB := $(filter-out ./$(TOP_DIR),$(OBJ_FILES))
 LINK = -lpessum
 NAME = aequatio
 
@@ -26,7 +27,8 @@ $(NAME): $(TOP_DIR) $(OBJ_FILES)
 
 .PHONY : subsystem
 subsystem:
-	@cd src && $(MAKE)
+	@setterm -fore cyan; printf "$(shell pwd)/aequatio_files:\n"; setterm -fore white
+	@cd aequatio_files && $(MAKE)
 
 .PHONY : clean
 clean:
@@ -48,3 +50,27 @@ install: clean all
 .PHONY : log
 log:
 	less output.log
+
+.PHONY : lib
+lib: all
+	@printf "Compiling lib$(NAME).a...\n"
+	ar rcs lib$(NAME).a $(OBJ_LIB)
+	@printf "Copying lib$(NAME).a to /usr/local/lib/...\n"
+	sudo cp lib$(NAME).a /usr/local/lib/ -u
+	@printf "Copying $(NAME).h to /usr/local/include/...\n"
+	sudo cp *.h /usr/local/include/
+	@printf "Copying project headers to /usr/local/include/...\n"
+	sudo find . -name '*.hpp' -exec cp --parents \{\} /usr/local/include/ \;
+	@setterm -fore green
+	@printf "==========>>>>>>>>>>Compiled Installed Lib<<<<<<<<<<==========\n"
+	@setterm -fore white
+
+.PHONY : doc-html
+doc-html:
+	@printf "Compiling HTML Documentation...\n"
+	@cd docs && $(MAKE) html
+
+.PHONY : doc-latex
+doc-latex:
+	@printf "Compiling Latex/PDF Documentation...\n"
+	@cd docs && $(MAKE) latexpdf

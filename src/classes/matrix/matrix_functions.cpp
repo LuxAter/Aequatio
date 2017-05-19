@@ -99,7 +99,8 @@ aequatio::Symbol aequatio::Inverse(aequatio::Symbol a) {
             }
           }
           Symbol sub_matrix(sub_matrix_terms);
-          inverse_terms[i][j] = (Symbol(pow(-1, i)) * Symbol(pow(-1, j))) * Determinant(sub_matrix);
+          inverse_terms[i][j] = (Symbol(pow(-1, i)) * Symbol(pow(-1, j))) *
+                                Determinant(sub_matrix);
         }
       }
       inv = Transpose(Symbol(inverse_terms));
@@ -113,10 +114,12 @@ aequatio::Symbol aequatio::Inverse(aequatio::Symbol a) {
   return (inv);
 }
 
-aequatio::Symbol aequatio::EchelonForm(aequatio::Symbol a) {
+aequatio::Symbol aequatio::RowEchelonForm(aequatio::Symbol a) {
   int type = a.Type();
   Symbol ech;
   if (type == SY_MATRIX) {
+    Matrix mat = *std::dynamic_pointer_cast<Matrix>(a.ptr);
+    std::vector<std::vector<Symbol>> ref(mat.rows, std::vector<Symbol>(mat.cols, Symbol()));
   }
   return (ech);
 }
@@ -126,7 +129,8 @@ aequatio::Symbol aequatio::Transpose(aequatio::Symbol a){
   Symbol transpose;
   if(type == SY_MATRIX){
     Matrix mat = *std::dynamic_pointer_cast<Matrix>(a.ptr);
-    std::vector<std::vector<Symbol>> transpose_terms(mat.cols, std::vector<Symbol>(mat.rows, Symbol()));
+    std::vector<std::vector<Symbol>> transpose_terms(
+        mat.cols, std::vector<Symbol>(mat.rows, Symbol()));
     for(int i = 0; i < mat.rows; i++){
       for(int j = 0; j < mat.cols; j++){
         transpose_terms[j][i] = mat.mat_terms[i][j];
