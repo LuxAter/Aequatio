@@ -20,5 +20,3 @@ std::string aequatio::Number::String() {
   stream >> out;
   return (out);
 }
-
-void aequatio::Number::operator=(const double& in_value) { value = in_value; }

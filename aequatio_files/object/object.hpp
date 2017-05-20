@@ -9,8 +9,6 @@ namespace aequatio {
     ~ObjectBase();
     virtual int Type();
     virtual std::string String();
-    virtual void operator=(const double& in_value);
-
    private:
   };
 }

@@ -11,7 +11,6 @@ namespace aequatio {
     ~Number();
     int Type();
     std::string String();
-    void operator=(const double& in_value);
     double value;
 
    private:

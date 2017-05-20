@@ -9,7 +9,4 @@ all: $(OBJ_FILES) subsystem
 
 .PHONY : subsystem
 subsystem:
-	@setterm -fore blue; printf "$(shell pwd)/complex:\n"; setterm -fore white
-	@cd complex && $(MAKE)
-	@setterm -fore blue; printf "$(shell pwd)/number:\n"; setterm -fore white
-	@cd number && $(MAKE)
+

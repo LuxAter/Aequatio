@@ -28,16 +28,12 @@ void Handle(std::pair<int, std::string> entry) {
   system("setterm -fore white");
 }
 
+using namespace aequatio;
+
 int main(int argc, char const* argv[]) {
   pessum::SetLogHandle(Handle);
-  //aequatio::Object a = std::make_shared<aequatio::Number>(aequatio::Number(2.1415));
-  aequatio::Object a = aequatio::make_object(aequatio::Number(3.1415));
-  aequatio::Object b(a);
-  std::cout << a->Type() << ":" << a->String() << "\n";
-  std::cout << b->Type() << ":" << b->String() << "\n";
-  std::cout << "===========\n";
-  a = 10.0;
-  std::cout << a->String() << "\n" << b->String() << "\n";
+  Complex a(3.14,5);
+  std::cout << a.String();
   pessum::SaveLog("out.log");
   return 0;
 }
