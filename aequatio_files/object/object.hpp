@@ -5,8 +5,11 @@ namespace aequatio {
   class ObjectBase {
    public:
     ObjectBase();
+    ObjectBase(const ObjectBase& copy);
+    ~ObjectBase();
     virtual int Type();
     virtual std::string String();
+    virtual void operator=(const double& in_value);
 
    private:
   };

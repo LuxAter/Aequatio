@@ -8,7 +8,7 @@ std::shared_ptr<aequatio::ObjectBase> aequatio::make_object(
     aequatio::Number num) {
   return (std::make_shared<aequatio::Number>(num));
 }
-// std::shared_ptr<aequatio::ObjectBase> aequatio::make_object(
-//     aequatio::ObjectBase obj) {
-//   return (std::make_shared<aequatio::ObjectBase>(obj));
-// }
+std::shared_ptr<aequatio::ObjectBase> aequatio::make_object(
+    aequatio::ObjectBase obj) {
+  return (std::make_shared<aequatio::ObjectBase>(obj));
+}

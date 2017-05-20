@@ -6,9 +6,12 @@ namespace aequatio {
   class Number : public ObjectBase {
    public:
     Number();
+    Number(const Number& copy);
     Number(double in_value);
+    ~Number();
     int Type();
     std::string String();
+    void operator=(const double& in_value);
     double value;
 
    private:

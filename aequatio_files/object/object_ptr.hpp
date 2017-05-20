@@ -6,7 +6,10 @@
 namespace aequatio {
   typedef std::shared_ptr<aequatio::ObjectBase> Object;
   std::shared_ptr<aequatio::ObjectBase> make_object(aequatio::Number num);
-  // std::shared_ptr<aequatio::ObjectBase> make_object(aequatio::ObjectBase
-  // obj);
+  std::shared_ptr<aequatio::ObjectBase> make_object(aequatio::ObjectBase obj);
 }
+
+template<>
+std::shared_ptr<aequatio::ObjectBase> std::shared_ptr<aequatio::ObjectBase>::operator=(const double& in_value);
+
 #endif
