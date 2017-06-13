@@ -2,8 +2,8 @@
 #define AEQUATIO_CORE_HPP
 
 #define AEQUATIO_VERSION_MAJOR 0
-#define AEQUATIO_VERSION_MINOR 1
-#define AEQUATIO_VERSION_PATCH 4
+#define AEQUATIO_VERSION_MINOR 0
+#define AEQUATIO_VERSION_PATCH 1
 
 namespace aequatio{
   void InitAequatio();
