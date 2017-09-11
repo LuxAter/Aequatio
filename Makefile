@@ -1,124 +1,133 @@
+SHELL = /bin/bash
+
+export NAME= aequatio
+export LINK= 
+export INCLUDE=
+export TYPE= lib
+
+export SOURCE_DIR= source
+export TEST_DIR= test
+export EXTERNAL_DIR = external
+export BUILD_DIR= build
+export INCLUDE_DIR= include
+
+export BASE_PATH=$(shell pwd)
+
+export COMPILER=g++
+export CXXFLAGS= -MMD -std=c++11 -w -c
+
+export INSTALL_PATH=/usr/local
+
+export GCOV_LINK = -lgcov --coverage
+export GCOV_FLAG = -fprofile-arcs -ftest-coverage
+
+export COMMON_INCLUDE=-I$(BASE_PATH)/$(INCLUDE_DIR) $(INCLUDE)
+
+export SECTION_COLOR=\033[1;97m
+export TARGET_COLOR=\033[0;34m
+export LINK_COLOR=\033[0;35m
+export CLEAN_COLOR=\033[0;33m
+export COMPILE_COLOR=\033[0;32m
+export INSTALL_COLOR=\033[0;36m
+export ERROR_COLOR=\033[1;31m
+export NO_COLOR=\033[m
+
 ifndef .VERBOSE
   .SILENT:
 endif
 
-SHELL =              /bin/zsh
-export WHITE =       \033[0;37m
-export GREEN =       \033[0;32m
-export RED =         \033[0;31m
-export YELLOW =      \033[0;33m
-export NO =          \033[m
-export PAD_LENGTH := $(shell \
-                     maxlength=0; \
-                     for file in `find -type f -name '*.cpp' -exec basename {} \;`; do \
-                     len=$${\#file}; \
-                     if [ $$len -gt $$maxlength ]; then \
-                     maxlength=$$len; \
-                     fi; \
-                     done; \
-                     str="Compiling$(NAME)source"; \
-		     if [ $${\#str} -gt $$maxlength ]; then \
-		     maxlength=$${\#str}; \
-		     fi; \
-		     maxlength=$$((maxlength + 13)); \
-                     echo $$maxlength )
-export PAD :=        $(shell printf '%0.1s' "."{1..$(PAD_LENGTH)})
-
-define checkmark =
-  printf "%b\n" "$(GREEN)\xE2\x9C\x94 $(NO)"  
+define print_section
+str="$(1)";\
+    line_length=$${#str};\
+    printf "%b%s\n" "$(SECTION_COLOR)" "$$str";\
+    while [ $$line_length -gt 0 ]; do\
+      printf "=";\
+      let line_length=line_length-1;\
+    done;\
+    printf "%b\n" "$(NO_COLOR)"
 endef
 
-define crossmark =
-  printf "%b\n" "$(RED)\xE2\x9D\x8C $(NO)"
+define print
+printf "%b%s%b\n" "$(2)" "$(1)" "$(NO_COLOR)"
 endef
 
-export checkmark
-export crossmark
-export COMPILER = clang++
-export FLAGS =    -MMD -std=c++11 -w -c
-CPP_FILES =       $(wildcard *.cpp)
-TOP_DIR =         $(CPP_FILES:.cpp=.o)
-OBJ_FILES :=      $(shell find -name '*.o')
-OBJ_LIB :=        $(filter-out ./$(TOP_DIR),$(OBJ_FILES))
-LINK =            -std=c++11 -lpessum
-NAME =            aequatio
+define help
+printf "%b%*s%b: %s\n" "$(TARGET_COLOR)" 14 "$(1)" "$(NO_COLOR)" "$(2)"
+endef
 
-all: start $(TOP_DIR) subsystem $(NAME)
-
-$(NAME): $(TOP_DIR) $(OBJ_FILES)
-	@str="Compiling $(NAME) source"; \
-	  printf '%b%s%*.*s%b' "$(WHITE)" $$str 0 $$(($(PAD_LENGTH) - $${#str})) "$(PAD)" "$(NO)"
-	$(COMPILER) $(OBJ_FILES) -o $(NAME) $(LINK) 2> $@.log; \
-	  RESULT=$$?; \
-	  if [ $$RESULT -ne 0 ]; then \
-	    $(crossmark); \
-	  else \
-	    $(checkmark); \
-	  fi; \
-	  cat $@.log; \
-	  rm -f $@.log
-
-%.o: %.cpp
-	@str="Compiling $*.cpp"; \
-	  printf '%s%*.*s' $$str 0 $$(($(PAD_LENGTH) - $${#str})) "$(PAD)"
-	@$(COMPILER) $(FLAGS) -o $(notdir $*).o $*.cpp 2> $@.log; \
-	  RESULT=$$?; \
-	  if [ $$RESULT -ne 0 ]; then \
-	    $(crossmark); \
-	  else \
-	    $(checkmark); \
-	  fi; \
-	  cat $@.log; \
-	  rm -f $@.log
-	    
-.PHONY : start
-start:
-	@printf "%b" "$(WHITE)Compiling $(NAME)$(NO)\n"
-
-.PHONY : subsystem
-subsystem:
-	@setterm -fore cyan; printf "$(shell pwd)/$(NAME)_files:\n"; setterm -default
-	cd $(NAME)_files && $(MAKE)
+.PHONY : all
+all: external source test
 
 .PHONY : clean
-clean:
-	find . -name "*.o" -type f -delete
-	find . -name "*.d" -type f -delete
-
-.PHONY : new
-new: clean all
+clean: clean-external clean-source clean-test
 
 .PHONY : install
-install: clean all
-	@printf "Installing $(NAME)..."
-	cp $(NAME) ~/bin/
-	$(checkmark)
+install: source root-access install-source
+	if [ $(TYPE) == "lib" ] && ! [ -d "$(INSTALL_PATH)/include/$(NAME)" ]; then \
+	  $(call print,Installing include directory,$(INSTALL_COLOR));\
+	  sudo mkdir $(INSTALL_PATH)/include/ -p;\
+	  sudo cp $(INCLUDE_DIR)/ $(INSTALL_PATH)/include/$(NAME)/ -r;\
+	fi
 
-.PHONY : log
-log:
-	log
+.PHONY : uninstall
+uninstall: root-access uninstall-source
+	if [ $(TYPE) == "lib" ] && [ -d "$(INSTALL_PATH)/include/$(NAME)" ]; then \
+	  $(call print,Uninstalling include directory,$(INSTALL_COLOR));\
+	  sudo rm $(INSTALL_PATH)/include/$(NAME) -rf;\
+	fi
 
-.PHONY : lib
-lib: all
-	@if [[ $$UID != 0 ]]; then printf "$(RED)Must run with sudo permision\n$(NO)"; exit 1; fi
-	@printf "$(WHITE)Compiling and installing $(NAME)\n$(NO)"
-	@printf "Compiling lib$(NAME).a..."
-	sudo ar rcs lib$(NAME).a $(OBJ_LIB)
-	$(checkmark)
-	@printf "Copying lib$(NAME).a to /usr/local/lib/..."
-	sudo cp lib$(NAME).a /usr/local/lib/ -u
-	$(checkmark)
-	@printf "Copying $(NAME).h to /usr/local/include/..."
-	sudo cp *.h /usr/local/include/
-	$(checkmark)
-	@printf "Copying project headers to /usr/local/include/..."
-	sudo find . -name '*.hpp' -exec cp --parents \{\} /usr/local/include/ \;
-	$(checkmark)
+.PHONY : help
+help:
+	$(call print_section,Makefile Help)
+	printf "List of all acceptable make targets\n\n"
+	$(call help,all,Builds external, source, and test files and projects)
+	$(call help,clean,Clean files created from external, source, and test)
+	$(call help,help,Display this help page)
+	$(call help,external,Builds external files and projects)
+	$(call help,clean-external,Cleans files created from external)
+	$(call help,source,Builds source files and projects)
+	$(call help,clean-source,Cleans files created from source)
+	$(call help,test,Builds test files and projects)
+	$(call help,clean-test,Cleans files created from test)
 
-.PHONY : doc-html
-doc-html:
-	cd docs && $(MAKE) html
+.PHONY : root-access
+root-access:
+	if [[ $$UID != 0 ]]; then \
+	  $(call print,Target requiers root access,$(ERROR_COLOR)); \
+	  exit 1; \
+	fi
 
-.PHONY : doc-latex
-doc-latex:
-	cd docs && $(MAKE) latexpdf
+.PHONY : external
+external:
+	$(call print_section,External Dependencies)
+	if [ -d "$(EXTERNAL_DIR)" ]; then cd "$(EXTERNAL_DIR)" && $(MAKE); fi
+.PHONY : clean-external
+clean-external:
+	$(call print_section,External Dependencies)
+	if [ -d "$(EXTERNAL_DIR)" ]; then cd "$(EXTERNAL_DIR)" && $(MAKE) clean; fi
+
+.PHONY : source
+source:
+	$(call print_section,Source Files)
+	if [ -d "$(SOURCE_DIR)" ]; then cd "$(SOURCE_DIR)" && $(MAKE); fi
+.PHONY : clean-source
+clean-source:
+	$(call print_section,Source Files)
+	if [ -d "$(SOURCE_DIR)" ]; then cd "$(SOURCE_DIR)" && $(MAKE) clean; fi
+.PHONY : install-source
+install-source:
+	$(call print_section,Source Files)
+	if [ -d "$(SOURCE_DIR)" ]; then cd "$(SOURCE_DIR)" && $(MAKE) install; fi
+.PHONY: uninstall-source
+uninstall-source:
+	$(call print_section,Source Files)
+	if [ -d "$(SOURCE_DIR)" ]; then cd "$(SOURCE_DIR)" && $(MAKE) uninstall; fi
+
+.PHONY : test
+test:
+	$(call print_section,Unit Tests)
+	if [ -d "$(TEST_DIR)" ]; then cd "$(TEST_DIR)" && $(MAKE); fi
+.PHONY : clean-test
+clean-test:
+	$(call print_section,Unit Tests)
+	if [ -d "$(TEST_DIR)" ]; then cd "$(TEST_DIR)" && $(MAKE) clean; fi
