@@ -13,8 +13,8 @@ export INCLUDE_DIR= include
 
 export BASE_PATH=$(shell pwd)
 
-export COMPILER=clang++
-export CXXFLAGS= -MMD -std=c++1z -w -c
+export COMPILER=g++
+export CXXFLAGS= -MMD -std=c++17 -w -c
 
 export INSTALL_PATH=/usr/local
 
@@ -59,7 +59,7 @@ endef
 all: external source test
 
 .PHONY : clean
-clean: clean-external clean-source clean-test
+clean: clean-source clean-test
 
 .PHONY : install
 install: source root-access install-source
