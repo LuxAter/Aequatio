@@ -4,10 +4,31 @@
 #include <string>
 
 aequatio::lexer::Token::Token() : type(NONE) {}
+aequatio::lexer::Token::Token(Type type_) : type(type_) {}
 aequatio::lexer::Token::Token(bool b, Type type_) : type(type_), bool_(b) {}
 aequatio::lexer::Token::Token(int i, Type type_) : type(type_), int_(i) {}
 aequatio::lexer::Token::Token(double d, Type type_) : type(type_), double_(d) {}
 aequatio::lexer::Token::Token(char c, Type type_) : type(type_), char_(c) {}
+
+aequatio::lexer::Token::Token(const Token& copy) : type(copy.type) {
+  switch (copy.type) {
+    case BOOL:
+      bool_ = copy.bool_;
+      break;
+    case INTEGER:
+      int_ = copy.int_;
+      break;
+    case DOUBLE:
+      double_ = copy.double_;
+      break;
+    case CHAR:
+      char_ = copy.char_;
+      break;
+    default:
+      char_ = copy.char_;
+      break;
+  }
+}
 
 bool aequatio::lexer::Token::IsNumeric() const {
   if (type == INTEGER || type == DOUBLE) {
@@ -15,6 +36,22 @@ bool aequatio::lexer::Token::IsNumeric() const {
   }
   return false;
 }
+
+bool aequatio::lexer::Token::IsValid() const {
+  if (type == NONE) {
+    return false;
+  } else {
+    return true;
+  }
+}
+
+bool aequatio::lexer::Token::Bool() const { return bool_; }
+
+int aequatio::lexer::Token::Int() const { return int_; }
+
+double aequatio::lexer::Token::Double() const { return double_; }
+
+char aequatio::lexer::Token::Char() const { return char_; }
 
 void aequatio::lexer::Token::operator=(bool b) {
   type = BOOL;
