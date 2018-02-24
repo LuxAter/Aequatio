@@ -140,6 +140,8 @@ aequatio::lexer::Token aequatio::lexer::operator-(const Token& lhs,
     case Token::CHAR:
       token = (lhs.char_ - rhs.char_);
       break;
+    default:
+      break;
   }
   return token;
 }
@@ -163,6 +165,8 @@ aequatio::lexer::Token aequatio::lexer::operator*(const Token& lhs,
     case Token::CHAR:
       token = (lhs.char_ * rhs.char_);
       break;
+    default:
+      break;
   }
   return token;
 }
@@ -185,6 +189,8 @@ aequatio::lexer::Token aequatio::lexer::operator/(const Token& lhs,
       break;
     case Token::CHAR:
       token = (lhs.char_ / rhs.char_);
+      break;
+    default:
       break;
   }
   return token;
@@ -273,22 +279,24 @@ bool aequatio::lexer::operator!(const Token& t) {
 }
 
 std::ostream& aequatio::lexer::operator<<(std::ostream& out, const Token& t) {
+  out << "(";
   switch (t.type) {
     case Token::BOOL:
-      out << t.bool_;
+      out << "Token::BOOL, " << t.bool_;
       break;
     case Token::INTEGER:
-      out << t.int_;
+      out << "Token::INTEGER, " << t.int_;
       break;
     case Token::DOUBLE:
-      out << t.double_;
+      out << "Token::DOUBLE, " << t.double_;
       break;
     case Token::CHAR:
-      out << t.char_;
+      out << "Token::CHAR, " << t.char_;
       break;
     default:
       out << "(null)";
   }
+  out << ")";
   return out;
 }
 
@@ -322,9 +330,9 @@ std::istream& aequatio::lexer::operator>>(std::istream& in, Token& t) {
     }
   } else if (integer == true) {
     if (has_dot == true) {
-      t = stod(str);
+      t = std::stod(str);
     } else {
-      t = stoi(str);
+      t = std::stoi(str);
     }
   }
   return in;

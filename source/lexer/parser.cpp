@@ -45,6 +45,6 @@ void aequatio::lexer::Parser::Eat(Token::Type type) {
 
 aequatio::lexer::Token aequatio::lexer::Parser::Factor() {
   Token token = current_token_;
-  Eat(Token::INTEGER);
+  Eat(Token::DOUBLE);
   return token;
 }

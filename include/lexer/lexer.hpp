@@ -19,6 +19,7 @@ namespace aequatio::lexer {
     void Advance();
     void SkipWhitespace();
     Token Integer();
+    Token Double();
 
     std::string text_;
     char current_char_;

@@ -1,0 +1,112 @@
+[
+    {
+        "arguments": [
+            "c++", 
+            "-c", 
+            "-I/home/arden/Programming/cpp/aequatio/include", 
+            "-std=c++17", 
+            "-w", 
+            "-fprofile-arcs", 
+            "-ftest-coverage", 
+            "-o", 
+            "/home/arden/Programming/cpp/aequatio/build/source/./log/log.o", 
+            "log/log.cpp"
+        ], 
+        "directory": "/home/arden/Programming/cpp/aequatio/source", 
+        "file": "log/log.cpp"
+    }, 
+    {
+        "arguments": [
+            "c++", 
+            "-c", 
+            "-I/home/arden/Programming/cpp/aequatio/include", 
+            "-std=c++17", 
+            "-w", 
+            "-fprofile-arcs", 
+            "-ftest-coverage", 
+            "-o", 
+            "/home/arden/Programming/cpp/aequatio/build/source/./main.o", 
+            "main.cpp"
+        ], 
+        "directory": "/home/arden/Programming/cpp/aequatio/source", 
+        "file": "main.cpp"
+    }, 
+    {
+        "arguments": [
+            "c++", 
+            "-c", 
+            "-I/home/arden/Programming/cpp/aequatio/include", 
+            "-std=c++17", 
+            "-w", 
+            "-fprofile-arcs", 
+            "-ftest-coverage", 
+            "-o", 
+            "/home/arden/Programming/cpp/aequatio/build/source/./lexer/token.o", 
+            "lexer/token.cpp"
+        ], 
+        "directory": "/home/arden/Programming/cpp/aequatio/source", 
+        "file": "lexer/token.cpp"
+    }, 
+    {
+        "arguments": [
+            "c++", 
+            "-c", 
+            "-I/home/arden/Programming/cpp/aequatio/include", 
+            "-std=c++17", 
+            "-w", 
+            "-fprofile-arcs", 
+            "-ftest-coverage", 
+            "-o", 
+            "/home/arden/Programming/cpp/aequatio/build/source/./lexer/parser.o", 
+            "lexer/parser.cpp"
+        ], 
+        "directory": "/home/arden/Programming/cpp/aequatio/source", 
+        "file": "lexer/parser.cpp"
+    }, 
+    {
+        "arguments": [
+            "c++", 
+            "-c", 
+            "-I/home/arden/Programming/cpp/aequatio/include", 
+            "-I/home/arden/Programming/cpp/aequatio/external/googletest/googletest/include", 
+            "-std=c++17", 
+            "-w", 
+            "-o", 
+            "/home/arden/Programming/cpp/aequatio/build/test/./log/test_log.o", 
+            "log/test_log.cpp"
+        ], 
+        "directory": "/home/arden/Programming/cpp/aequatio/test", 
+        "file": "log/test_log.cpp"
+    }, 
+    {
+        "arguments": [
+            "c++", 
+            "-c", 
+            "-I/home/arden/Programming/cpp/aequatio/include", 
+            "-I/home/arden/Programming/cpp/aequatio/external/googletest/googletest/include", 
+            "-std=c++17", 
+            "-w", 
+            "-o", 
+            "/home/arden/Programming/cpp/aequatio/build/test/./tmp.o", 
+            "tmp.cpp"
+        ], 
+        "directory": "/home/arden/Programming/cpp/aequatio/test", 
+        "file": "tmp.cpp"
+    }, 
+    {
+        "arguments": [
+            "c++", 
+            "-c", 
+            "-I/home/arden/Programming/cpp/aequatio/include", 
+            "-std=c++17", 
+            "-w", 
+            "-fprofile-arcs", 
+            "-ftest-coverage", 
+            "-o", 
+            "/home/arden/Programming/cpp/aequatio/build/source/./lexer/lexer.o", 
+            "lexer/lexer.cpp"
+        ], 
+        "directory": "/home/arden/Programming/cpp/aequatio/source", 
+        "file": "lexer/lexer.cpp"
+    }
+]
